@@ -1,0 +1,10 @@
+{
+    "productDetails": "RTX 5090",
+    "quantity": 2,
+    "priceDetails": "$2000",
+    "paymentMethod": "UPI",
+    "discount": "20%",
+    "shippingMethod": "Express",
+    "subTotal": "$4000",
+    "total": "$3300"
+}
