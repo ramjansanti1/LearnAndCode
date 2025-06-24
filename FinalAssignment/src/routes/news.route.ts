@@ -33,6 +33,10 @@ export default class NewsRouter {
 
         this.router
             .route('/save')
+            .get(
+                this.authMiddleware.verifyJWT,
+                newsController.getSavedNewsArticle
+            )
             .post(
                 this.authMiddleware.verifyJWT,
                 newsController.saveNewsArticle

@@ -5,12 +5,26 @@ export default class NotificationController {
 
     constructor() {
         this.notificationService = new NotificationService();
+        this.getNotifications = this.getNotifications.bind(this);
         this.getNotificationConfig = this.getNotificationConfig.bind(this);
         this.addNotificationConfig = this.addNotificationConfig.bind(this);
         this.addCategoryToNotificationConfig = this.addCategoryToNotificationConfig.bind(this);
         this.removeCategoryToNotificationConfig = this.removeCategoryToNotificationConfig.bind(this);
         this.addKeywordToNotificationConfig = this.addKeywordToNotificationConfig.bind(this);
         this.removeKeywordToNotificationConfig = this.removeKeywordToNotificationConfig.bind(this);
+    }
+
+    async getNotifications(req: any, res: any) {
+        try {
+            const fetchedNotificationConfig = await this.notificationService.handleGetNotification(req.user);
+            return res
+                .status(200)
+                .json({ message: "Notification config fetched successfully", data: fetchedNotificationConfig });
+        } catch (error) {
+            return res
+                .status(500)
+                .json({ message: "Error getting notification config", data: error });
+        }
     }
 
     async getNotificationConfig(req: any, res: any) {

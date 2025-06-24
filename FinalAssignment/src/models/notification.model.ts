@@ -1,16 +1,24 @@
 import mongoose from "mongoose";
 
-const notificationConfigSchema = new mongoose.Schema(
+const notificationSchema = new mongoose.Schema(
     {
         userId: {
-            type: String
+            type: String,
+            required: true
         },
-        categoryPreference: [
-            { type: String }
-        ],
-        keywords: [
-            { type: String }
-        ]
+        articleId: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        },
+        sentOverMail: {
+            type: String,
+            required: true,
+            default: false
+        }
     },
     {
         timestamps: true,
@@ -18,5 +26,5 @@ const notificationConfigSchema = new mongoose.Schema(
     }
 );
 
-const NotificationConfig = mongoose.model("NotificationConfig", notificationConfigSchema);
-export default NotificationConfig;
+const Notification = mongoose.model("Notification", notificationSchema);
+export default Notification;

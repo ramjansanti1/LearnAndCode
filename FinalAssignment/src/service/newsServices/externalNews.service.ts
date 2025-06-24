@@ -2,13 +2,21 @@ import News from "../../models/news.model.js";
 import NewsApiService from "./newsapi.service.js";
 import TheNewsApiService from "./theNewsApi.service.js";
 
-export default class ExternalNewsService{
+export default class ExternalNewsService {
     private newsApiInstance: NewsApiService;
     private theNewsApiInstance: TheNewsApiService
 
     constructor() {
         this.newsApiInstance = new NewsApiService();
         this.theNewsApiInstance = new TheNewsApiService();
+    }
+
+    async startNewsScheduler() {
+        await this.fetchNews();
+
+        setInterval(async () => {
+            await this.fetchNews();
+        }, 10800000);
     }
 
     async fetchNews() {

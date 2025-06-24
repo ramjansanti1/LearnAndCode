@@ -8,7 +8,18 @@ export default class NewsService {
     }
 
     async handleGetNewsBycategory(category: string) {
-        const news = await News.find({ category, blocked: false }).limit(20);
+        const news = await News.find({ category, blocked: false }).sort({ likes: 1 }).limit(20);
+        return news;
+    }
+
+    async handleGetNewsBySearchQuery(searchQuery: string) {
+        const news = await News.find({
+            $or: [
+                { title: { $regex: searchQuery, $options: 'i' } },
+                { content: { $regex: searchQuery, $options: 'i' } },
+                { description: { $regex: searchQuery, $options: 'i' } }
+            ]
+        }).sort({ likes: 1 }).limit(20);
         return news;
     }
 
@@ -22,9 +33,24 @@ export default class NewsService {
                 createdAt: { $gte: start, $lte: end },
                 blocked: false
             })
-            .sort({ createdAt: -1 })
+            .sort({ likes: 1 })
             .limit(20);
         return news;
+    }
+
+    async handleGetSavedNewsArticle(user: { [key: string]: any }) {
+        let articles: { [key: string]: any } = [];
+        const savedArticles = await SavedArticle.find({
+            userId: user._id
+        });
+        if (!savedArticles) {
+            throw new Error("Saved article not found");
+        }
+        for (const article of savedArticles) {
+            const fetchedArticle = await News.findById(article.articleId);
+            articles.push(fetchedArticle);
+        }
+        return articles;
     }
 
     async handleSaveNewsArticle(articleId: string, user: { [key: string]: any }) {

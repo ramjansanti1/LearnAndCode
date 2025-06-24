@@ -13,7 +13,7 @@ dotenv.config();
         app.listen(process.env.PORT, () => {
             console.log(`The server is listening on PORT: ${process.env.PORT}`);
         });
-        externalNewsService.fetchNews();
+        externalNewsService.startNewsScheduler();
     } catch (error) {
         console.log(error);
     }

@@ -7,6 +7,7 @@ class NewsController {
         this.newsService = new NewsService();
         this.getNews = this.getNews.bind(this);
         this.getNewsByDate = this.getNewsByDate.bind(this);
+        this.getSavedNewsArticle = this.getSavedNewsArticle.bind(this);
         this.saveNewsArticle = this.saveNewsArticle.bind(this);
         this.deleteNewsArticle = this.deleteNewsArticle.bind(this);
         this.likeArticle = this.likeArticle.bind(this);
@@ -16,9 +17,11 @@ class NewsController {
 
     private async getNewsBasedOnPrefrence(req: any) {
         let fetchedNews;
-        const { category } = req.query;
+        const { category, searchQuery } = req.query;
         if (category) {
             fetchedNews = await this.newsService.handleGetNewsBycategory(category);
+        } else if (searchQuery) {
+            fetchedNews = await this.newsService.handleGetNewsBySearchQuery(searchQuery);
         }
         else {
             fetchedNews = await this.newsService.handleGetNews();
@@ -49,6 +52,19 @@ class NewsController {
             return res
                 .status(500)
                 .json({ message: "Error fetching news", data: error });
+        }
+    }
+
+    async getSavedNewsArticle(req: any, res: any) {
+        try {
+            let savedArticles = await this.newsService.handleGetSavedNewsArticle(req.user);
+            return res
+                .status(200)
+                .json({ message: "Article fetched successfully", data: savedArticles });
+        } catch (error) {
+            return res
+                .status(500)
+                .json({ message: "Error saving article", data: error });
         }
     }
 

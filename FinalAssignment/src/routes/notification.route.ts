@@ -19,6 +19,13 @@ export default class NotificationRouter {
             .route('/')
             .get(
                 this.authMiddleware.verifyJWT,
+                this.notificationController.getNotifications
+            )
+
+        this.router
+            .route('/config')
+            .get(
+                this.authMiddleware.verifyJWT,
                 this.notificationController.getNotificationConfig
             )
             .post(
@@ -38,8 +45,8 @@ export default class NotificationRouter {
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.notificationController.removeCategoryToNotificationConfig
-        )
-        
+            )
+
         this.router
             .route('/addKeyWord')
             .patch(
