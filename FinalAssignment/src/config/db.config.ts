@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { MessageConstants } from '../constants/message.constants';
 
 class Database {
     private static instance: Database;
@@ -16,9 +17,9 @@ class Database {
         try {
             console.log(`${process.env.MONGODB_URI}`);
             const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}`);
-            console.log(`MongoDB connected on host: ${connectionInstance.connection.host}`);
+            console.log(`${MessageConstants.monogoConnected} ${connectionInstance.connection.host}`);
         } catch (error) {
-            console.error(`MongoDB connection error: ${(error as Error).message}`);
+            console.error(`${MessageConstants.mongoConncetionError} ${(error as Error).message}`);
         }
     }
 }

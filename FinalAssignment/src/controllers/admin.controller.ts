@@ -1,3 +1,4 @@
+import { MessageConstants } from "../constants/message.constants.js";
 import AdminService from "../service/admin.service.js";
 
 export default class AdminController {
@@ -19,11 +20,11 @@ export default class AdminController {
             const updatedUser = await this.adminService.handleGrantAdminAccess(req.body);
             return res
                 .status(200)
-                .json({ message: "Access granted successfully", data: updatedUser });
+                .json({ message: MessageConstants.accessGranted, data: updatedUser });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error granting access", data: error });
+                .json({ message: MessageConstants.accessGrantError, data: error });
         }
     }
 
@@ -32,11 +33,11 @@ export default class AdminController {
             const updatedUser = await this.adminService.handleRevokeAdminAccess(req.body);
             return res
                 .status(200)
-                .json({ message: "Access revoked successfully", data: updatedUser });
+                .json({ message: MessageConstants.accessRevoked, data: updatedUser });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error revoking access", data: error });
+                .json({ message: MessageConstants.accessRevokeError, data: error });
         }
     }
 
@@ -45,11 +46,11 @@ export default class AdminController {
             const reportedArticles = await this.adminService.handleGetReports();
             return res
                 .status(200)
-                .json({ message: "Reports fetched successfully", data: reportedArticles });
+                .json({ message: MessageConstants.reportsFetched, data: reportedArticles });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error fetching reports", data: error });
+                .json({ message: MessageConstants.reportsFetchError, data: error });
         }
     }
 
@@ -58,11 +59,11 @@ export default class AdminController {
             const blockedArticle = await this.adminService.handleUpdateArticleStatus(req.body);
             return res
                 .status(200)
-                .json({ message: "Article updated successfully", data: blockedArticle });
+                .json({ message: MessageConstants.articleUpdated, data: blockedArticle });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error updating article", data: error });
+                .json({ message: MessageConstants.articleUpdateError, data: error });
         }
     }
 
@@ -71,11 +72,11 @@ export default class AdminController {
             const categories = await this.adminService.handleGetCategories();
             return res
                 .status(200)
-                .json({ message: "Categories fetched successfully", data: categories });
+                .json({ message: MessageConstants.categoriesFetched, data: categories });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error fetching categories", data: error });
+                .json({ message: MessageConstants.categoriesFetchError, data: error });
         }
     }
 
@@ -84,7 +85,10 @@ export default class AdminController {
             const createdCategory = await this.adminService.handleAddCategories(req.body);
             return res
                 .status(201)
-                .json({ message: "Categories added successfully", data: createdCategory });
+                .json({
+                    message: "Categories added successfully", data
+                        : createdCategory
+                });
         } catch (error) {
             return res
                 .status(500)
