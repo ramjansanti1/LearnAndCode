@@ -37,10 +37,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.news.fetchSuccess, data: fetchedNews });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.news.fetchError, data: error });
+                .json({ message: error.message || MessageConstants.news.fetchError, data: error });
         }
     }
 
@@ -50,10 +50,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.news.fetchSuccess, data: fetchedNews });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.news.fetchError, data: error });
+                .json({ message: error.message || MessageConstants.news.fetchError, data: error });
         }
     }
 
@@ -63,10 +63,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.fetchSuccess, data: savedArticles });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.article.fetchError, data: error });
+                .json({ message: error.message || MessageConstants.article.fetchError, data: error });
         }
     }
 
@@ -76,10 +76,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.saveSuccess, data: savedArticle });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.article.saveError, data: error });
+                .json({ message: error.message || MessageConstants.article.saveError, data: error });
         }
     }
 
@@ -89,10 +89,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.deleteSuccess, data: savedArticle });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.article.deleteError, data: error });
+                .json({ message: error.message || MessageConstants.article.deleteError, data: error });
         }
     }
 
@@ -102,10 +102,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.likeSuccess, data: savedArticle });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.article.likeError, data: error });
+                .json({ message: error.message || MessageConstants.article.likeError, data: error });
         }
     }
 
@@ -115,10 +115,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.dislikeSuccess, data: savedArticle });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.article.dislikeError, data: error });
+                .json({ message: error.message || MessageConstants.article.dislikeError, data: error });
         }
     }
 
@@ -128,10 +128,10 @@ class NewsController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.reportSuccess, data: reportedArticle });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.article.reportError, data: error });
+                .json({ message: error.message || MessageConstants.article.reportError, data: error });
         }
     }
 }

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
+import { MessageConstants } from '../constants/message.constants.js';
 
 export default class AuthMiddleware {
     async verifyJWT(req: any, res: any, next: Function) {
@@ -15,7 +16,7 @@ export default class AuthMiddleware {
             req.user = user;
             next();
         } catch (error) {
-            throw new Error("INVALID_TOKEN_ERROR");
+            res.status(401).json({ message: MessageConstants.middleware.invalidTokenError });
         }
     }
 }

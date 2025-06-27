@@ -21,10 +21,10 @@ export default class NotificationController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.notification.fetchSuccess, data: fetchedNotificationConfig });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.notification.fetchError, data: error });
+                .json({ message: error.message || MessageConstants.notification.fetchError, data: error });
         }
     }
 
@@ -34,10 +34,10 @@ export default class NotificationController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.notification.fetchSuccess, data: fetchedNotificationConfig });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.notification.fetchError, data: error });
+                .json({ message: error.message || MessageConstants.notification.fetchError, data: error });
         }
     }
 
@@ -47,10 +47,10 @@ export default class NotificationController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.notification.addSuccess, data: addedNotificationConfig });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.notification.addError, data: error });
+                .json({ message: error.message || MessageConstants.notification.addError, data: error });
         }
     }
 
@@ -60,10 +60,10 @@ export default class NotificationController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.notification.categoryAddSuccess, data: addedCategory });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.notification.categoryAddError, data: error });
+                .json({ message: error.message || MessageConstants.notification.categoryAddError, data: error });
         }
     }
 
@@ -73,10 +73,10 @@ export default class NotificationController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.notification.categoryRemoveSuccess, data: removedCategory });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.notification.categoryRemoveError, data: error });
+                .json({ message: error.message || MessageConstants.notification.categoryRemoveError, data: error });
         }
     }
 
@@ -86,10 +86,10 @@ export default class NotificationController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.notification.keywordAddSuccess, data: addedKeyword });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.notification.keywordAddError, data: error });
+                .json({ message: error.message || MessageConstants.notification.keywordAddError, data: error });
         }
     }
 
@@ -99,10 +99,10 @@ export default class NotificationController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.notification.keywordRemoveSuccess, data: removedKeyword });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.notification.keywordRemoveError, data: error });
+                .json({ message: error.message || MessageConstants.notification.keywordRemoveError, data: error });
         }
     }
 }

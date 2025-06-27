@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MessageConstants } from "../constants/message.constants";
 
 const newsSchema = new mongoose.Schema(
     {
@@ -45,5 +46,5 @@ const newsSchema = new mongoose.Schema(
     }
 );
 
-const News = mongoose.model("News", newsSchema);
+const News = mongoose.model(MessageConstants.model.news, newsSchema);
 export default News;

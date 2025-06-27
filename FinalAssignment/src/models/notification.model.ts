@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MessageConstants } from "../constants/message.constants";
 
 const notificationSchema = new mongoose.Schema(
     {
@@ -26,5 +27,5 @@ const notificationSchema = new mongoose.Schema(
     }
 );
 
-const Notification = mongoose.model("Notification", notificationSchema);
+const Notification = mongoose.model(MessageConstants.model.notification, notificationSchema);
 export default Notification;

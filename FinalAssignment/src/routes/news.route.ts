@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import newsController from '../controllers/news.controller.js';
 import AuthMiddleware from '../middlewares/auth.middleware.js';
+import { RouteConstants } from '../constants/route.constants.js';
 
 export default class NewsRouter {
     router: Router;
@@ -14,7 +15,7 @@ export default class NewsRouter {
 
     private initRoutes() {
         this.router
-            .route('/')
+            .route(RouteConstants.root)
             .get(
                 this.authMiddleware.verifyJWT,
                 newsController.getNews
@@ -25,14 +26,14 @@ export default class NewsRouter {
             );
 
         this.router
-            .route('/date')
+            .route(RouteConstants.news.date)
             .get(
                 this.authMiddleware.verifyJWT,
                 newsController.getNewsByDate
             );
 
         this.router
-            .route('/save')
+            .route(RouteConstants.news.save)
             .get(
                 this.authMiddleware.verifyJWT,
                 newsController.getSavedNewsArticle
@@ -43,21 +44,21 @@ export default class NewsRouter {
             );
 
         this.router
-            .route('/like')
+            .route(RouteConstants.news.like)
             .patch(
                 this.authMiddleware.verifyJWT,
                 newsController.likeArticle
             );
 
         this.router
-            .route('/dislike')
+            .route(RouteConstants.news.dislike)
             .patch(
                 this.authMiddleware.verifyJWT,
                 newsController.dislikeArticle
             );
 
         this.router
-            .route('/report')
+            .route(RouteConstants.news.report)
             .patch(
                 this.authMiddleware.verifyJWT,
                 newsController.reportArticle

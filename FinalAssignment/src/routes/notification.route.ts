@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import AuthMiddleware from '../middlewares/auth.middleware.js';
 import NotificationController from '../controllers/notification.controller.js';
+import { RouteConstants } from '../constants/route.constants.js';
 
 export default class NotificationRouter {
     router: Router;
@@ -16,14 +17,14 @@ export default class NotificationRouter {
 
     private initRoutes() {
         this.router
-            .route('/')
+            .route(RouteConstants.root)
             .get(
                 this.authMiddleware.verifyJWT,
                 this.notificationController.getNotifications
             )
 
         this.router
-            .route('/config')
+            .route(RouteConstants.notification.config)
             .get(
                 this.authMiddleware.verifyJWT,
                 this.notificationController.getNotificationConfig
@@ -34,28 +35,28 @@ export default class NotificationRouter {
             )
 
         this.router
-            .route('/addCategory')
+            .route(RouteConstants.notification.addCategory)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.notificationController.addCategoryToNotificationConfig
             )
 
         this.router
-            .route('/removeCategory')
+            .route(RouteConstants.notification.removeCategory)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.notificationController.removeCategoryToNotificationConfig
             )
 
         this.router
-            .route('/addKeyWord')
+            .route(RouteConstants.notification.addKeyWord)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.notificationController.addKeywordToNotificationConfig
             )
 
         this.router
-            .route('/removeKeyword')
+            .route(RouteConstants.notification.removeKeyword)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.notificationController.removeKeywordToNotificationConfig

@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import AuthMiddleware from '../middlewares/auth.middleware.js';
 import userController from '../controllers/user.controller.js';
+import { RouteConstants } from '../constants/route.constants.js';
 
 export default class UserRouter {
     router: Router;
@@ -14,15 +15,15 @@ export default class UserRouter {
 
     private initRoutes() {
         this.router
-            .route('/signup')
+            .route(RouteConstants.user.signup)
             .post(userController.signup);
 
         this.router
-            .route('/login')
+            .route(RouteConstants.user.login)
             .post(userController.login);
 
         this.router
-            .route('/changepassword')
+            .route(RouteConstants.user.changepassword)
             .post(
                 this.authMiddleware.verifyJWT,
                 userController.changePassword

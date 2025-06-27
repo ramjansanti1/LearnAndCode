@@ -21,10 +21,10 @@ export default class AdminController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.access.success, data: updatedUser });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.access.error, data: error });
+                .json({ message: error.message || MessageConstants.access.error, data: error });
         }
     }
 
@@ -34,10 +34,10 @@ export default class AdminController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.access.revokedSuccess, data: updatedUser });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.access.revokedError, data: error });
+                .json({ message: error.message || MessageConstants.access.revokedError, data: error });
         }
     }
 
@@ -47,10 +47,10 @@ export default class AdminController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.reports.success, data: reportedArticles });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.reports.error, data: error });
+                .json({ message: error.message || MessageConstants.reports.error, data: error });
         }
     }
 
@@ -60,10 +60,10 @@ export default class AdminController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.articleUpdate.success, data: blockedArticle });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.articleUpdate.error, data: error });
+                .json({ message: error.message || MessageConstants.articleUpdate.error, data: error });
         }
     }
 
@@ -73,10 +73,10 @@ export default class AdminController {
             return res
                 .status(200)
                 .json({ message: MessageConstants.categories.fetchSuccess, data: categories });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.categories.fetchError, data: error });
+                .json({ message: error.message || MessageConstants.categories.fetchError, data: error });
         }
     }
 
@@ -85,14 +85,11 @@ export default class AdminController {
             const createdCategory = await this.adminService.handleAddCategories(req.body);
             return res
                 .status(201)
-                .json({
-                    message: MessageConstants.categories.addSuccess, data
-                        : createdCategory
-                });
-        } catch (error) {
+                .json({ message: MessageConstants.categories.addSuccess, data: createdCategory });
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.categories.addError, data: error });
+                .json({ message: error.message || MessageConstants.categories.addError, data: error });
         }
     }
 
@@ -102,10 +99,10 @@ export default class AdminController {
             return res
                 .status(201)
                 .json({ message: MessageConstants.categories.updateSuccess, data: createdCategory });
-        } catch (error) {
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.categories.updateError, data: error });
+                .json({ message: error.message || MessageConstants.categories.updateError, data: error });
         }
     }
 }

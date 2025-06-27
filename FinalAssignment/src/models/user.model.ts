@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import { IUser } from "../interfaces/user.interface.js";
+import { MessageConstants } from "../constants/message.constants.js";
 
 const userSchema = new Schema<IUser>(
     {
@@ -52,5 +53,5 @@ userSchema.pre("save", async function (next) {
     next();
 });
 
-const User = model<IUser>("User", userSchema);
+const User = model<IUser>(MessageConstants.model.user, userSchema);
 export default User;

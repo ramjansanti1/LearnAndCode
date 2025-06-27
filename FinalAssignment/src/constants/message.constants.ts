@@ -75,4 +75,29 @@ export class MessageConstants {
         keywordRemoveSuccess: "Keyword removed successfully",
         keywordRemoveError: "Error removing keyword",
     };
+
+    static user = {
+        signupSuccess: "User created successfully",
+        signupError: "Error signing up",
+        loginSuccess: "Logged in successfully",
+        loginError: "Error logging in",
+        passwordChangeSuccess: "Password changed successfully",
+        passwordChangeError: "Error changing password",
+    };
+
+    static middleware = {
+        accessDenied: "Access denied. Admins only.",
+        checkError: "Something went wrong during admin check",
+        invalidTokenError: "The access token is invalid please login again"
+    };
+
+    static model = {
+        category: "Category",
+        user: "User",
+        externalSource: "ExternalSource",
+        news: "News",
+        notification: "Notification",
+        notificationConfig: "NotificationConfig",
+        savedArticle: "SavedArticle"
+    }
 }

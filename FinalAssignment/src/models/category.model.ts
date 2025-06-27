@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MessageConstants } from "../constants/message.constants";
 
 const categorySchema = new mongoose.Schema(
     {
@@ -19,5 +20,5 @@ const categorySchema = new mongoose.Schema(
     }
 );
 
-const Category = mongoose.model("Category", categorySchema);
+const Category = mongoose.model(MessageConstants.model.category, categorySchema);
 export default Category;

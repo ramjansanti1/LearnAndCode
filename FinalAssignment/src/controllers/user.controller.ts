@@ -1,6 +1,7 @@
 import UserService from "../service/user.service.js";
 import NotificationService from "../service/notification.service.js";
 import EmailService from '../service/emailServices/email.sercvice.js';
+import { MessageConstants } from "../constants/message.constants.js";
 
 class UserController {
     userService: UserService;
@@ -21,11 +22,11 @@ class UserController {
             const createdUser = await this.userService.handleSignup(req.body);
             return res
                 .status(201)
-                .json({ message: "User created successfully", data: createdUser });
-        } catch (error) {
+                .json({ message: MessageConstants.user.signupSuccess, data: createdUser });
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: "Error siginig up", data: error });
+                .json({ message: error.message || MessageConstants.user.signupError, data: error });
         }
     }
 
@@ -37,11 +38,11 @@ class UserController {
             return res
                 .status(200)
                 .cookie("accessToken", loginResponse.accessToken)
-                .json({ message: "logged in successfully", data: loginResponse });
-        } catch (error) {
+                .json({ message: MessageConstants.user.loginSuccess, data: loginResponse });
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: "Error logging up", data: error });
+                .json({ message: error.message || MessageConstants.user.loginError, data: error });
         }
     }
 
@@ -50,11 +51,11 @@ class UserController {
             const fecthedUser = await this.userService.handleChangePassword(req.body);
             return res
                 .status(200)
-                .json({ message: "Password changed successfully", data: fecthedUser });
-        } catch (error) {
+                .json({ message: MessageConstants.user.passwordChangeSuccess, data: fecthedUser });
+        } catch (error: any) {
             return res
                 .status(500)
-                .json({ message: "Error logging up", data: error });
+                .json({ message: error.message || MessageConstants.user.passwordChangeError, data: error });
         }
     }
 }

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MessageConstants } from "../constants/message.constants";
 
 const externalsourceSchema = new mongoose.Schema(
     {
@@ -22,5 +23,5 @@ const externalsourceSchema = new mongoose.Schema(
     }
 );
 
-const ExternalSource = mongoose.model("ExternalSource", externalsourceSchema);
+const ExternalSource = mongoose.model(MessageConstants.model.externalSource, externalsourceSchema);
 export default ExternalSource;

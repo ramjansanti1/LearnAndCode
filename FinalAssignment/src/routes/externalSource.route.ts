@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 import AuthMiddleware from '../middlewares/auth.middleware.js';
 import ExternalSourceController from '../controllers/externalSource.controller.js';
 import AdminMiddleware from '../middlewares/admin.middleware.js';
+import { RouteConstants } from '../constants/route.constants.js';
 
 export default class ExternalSourceRouter {
     router: Router;
@@ -19,7 +20,7 @@ export default class ExternalSourceRouter {
 
     private initRoutes() {
         this.router
-            .route('/')
+            .route(RouteConstants.root)
             .get(
                 this.authMiddleware.verifyJWT,
                 this.adminMiddleware.checkAdmin,
@@ -37,7 +38,7 @@ export default class ExternalSourceRouter {
             );
 
         this.router
-            .route('/activate')
+            .route(RouteConstants.externalSource.activate)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.adminMiddleware.checkAdmin,
@@ -45,7 +46,7 @@ export default class ExternalSourceRouter {
             );
 
         this.router
-            .route('/deactivate')
+            .route(RouteConstants.externalSource.deactivate)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.adminMiddleware.checkAdmin,

@@ -3,6 +3,7 @@ import AuthMiddleware from '../middlewares/auth.middleware.js';
 import AdminController from '../controllers/admin.controller.js';
 import ExternalSourceRouter from './externalSource.route.js';
 import AdminMiddleware from '../middlewares/admin.middleware.js';
+import { RouteConstants } from '../constants/route.constants.js';
 
 export default class AdminRouter {
     router: Router;
@@ -21,10 +22,10 @@ export default class AdminRouter {
     }
 
     private initRoutes() {
-        this.router.use('/externalsource', this.externalSourceRouter.router);
+        this.router.use(RouteConstants.admin.externalSource, this.externalSourceRouter.router);
 
         this.router
-            .route('/grantadminaccess')
+            .route(RouteConstants.admin.grantadminaccess)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.adminMiddleware.checkAdmin,
@@ -32,7 +33,7 @@ export default class AdminRouter {
             );
 
         this.router
-            .route('/revokeadminaccess')
+            .route(RouteConstants.admin.revokeadminaccess)
             .patch(
                 this.authMiddleware.verifyJWT,
                 this.adminMiddleware.checkAdmin,
@@ -40,7 +41,7 @@ export default class AdminRouter {
             );
 
         this.router
-            .route('/reports')
+            .route(RouteConstants.admin.reports)
             .get(
                 this.authMiddleware.verifyJWT,
                 this.adminMiddleware.checkAdmin,
@@ -53,7 +54,7 @@ export default class AdminRouter {
             );
 
         this.router
-            .route('/categories')
+            .route(RouteConstants.admin.categories)
             .get(
                 this.authMiddleware.verifyJWT,
                 this.adminMiddleware.checkAdmin,

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MessageConstants } from "../constants/message.constants";
 
 const savedArticleSchema = new mongoose.Schema(
     {
@@ -16,5 +17,5 @@ const savedArticleSchema = new mongoose.Schema(
     }
 );
 
-const SavedArticle = mongoose.model("SavedArticle", savedArticleSchema);
+const SavedArticle = mongoose.model(MessageConstants.model.savedArticle, savedArticleSchema);
 export default SavedArticle;

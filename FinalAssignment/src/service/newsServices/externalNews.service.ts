@@ -1,6 +1,7 @@
 import News from "../../models/news.model.js";
 import NewsApiService from "./newsapi.service.js";
 import TheNewsApiService from "./theNewsApi.service.js";
+import Category from "../../models/category.model.js";
 
 export default class ExternalNewsService {
     private newsApiInstance: NewsApiService;
@@ -25,12 +26,14 @@ export default class ExternalNewsService {
     }
 
     async fetchNewsFromApi(newsSourceInstance: NewsApiService | TheNewsApiService) {
-        const categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
+        const categories = await Category.find({});
 
         categories.forEach(async (category) => {
-            const articles = await newsSourceInstance.fetchNewsFromExternalApiByCategory(category);
-            let processedArticles = newsSourceInstance.processArticlesToStoreInDB(articles, category);
-            await this.addDataToDb(processedArticles);
+            if (category.status) {
+                const articles = await newsSourceInstance.fetchNewsFromExternalApiByCategory(category.category);
+                let processedArticles = newsSourceInstance.processArticlesToStoreInDB(articles, category.category);
+                await this.addDataToDb(processedArticles);
+            }
         });
     }
 
