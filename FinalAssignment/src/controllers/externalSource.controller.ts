@@ -1,3 +1,4 @@
+import { MessageConstants } from "../constants/message.constants.js";
 import ExternalSourceService from "../service/externalSource.service.js";
 
 export default class ExternalSourceController {
@@ -17,11 +18,11 @@ export default class ExternalSourceController {
             const fecthedExternalSourcces = await this.externalSourceService.handleGetExternalSource();
             return res
                 .status(200)
-                .json({ message: "External sources fetched successfully", data: fecthedExternalSourcces });
+                .json({ message: MessageConstants.externalSource.fetchSuccess, data: fecthedExternalSourcces });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error fetching sources", data: error });
+                .json({ message: MessageConstants.externalSource.fetchError, data: error });
         }
     }
 
@@ -30,11 +31,11 @@ export default class ExternalSourceController {
             const fecthedExternalSourcces = await this.externalSourceService.handleAddExternalSource(req.body);
             return res
                 .status(200)
-                .json({ message: "External source added successfully", data: fecthedExternalSourcces });
+                .json({ message: MessageConstants.externalSource.addSuccess, data: fecthedExternalSourcces });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error adding source", data: error });
+                .json({ message: MessageConstants.externalSource.addError, data: error });
         }
     }
 
@@ -43,11 +44,11 @@ export default class ExternalSourceController {
             const fecthedExternalSourcces = await this.externalSourceService.handleUpdateApiKey(req.body);
             return res
                 .status(200)
-                .json({ message: "External source API updated successfully", data: fecthedExternalSourcces });
+                .json({ message: MessageConstants.externalSource.apiKeyUpdateSuccess, data: fecthedExternalSourcces });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error updating source", data: error });
+                .json({ message: MessageConstants.externalSource.apiKeyUpdateError, data: error });
         }
     }
 
@@ -64,11 +65,11 @@ export default class ExternalSourceController {
             const fecthedExternalSourcces = await this.externalSourceService.handleUpdateStatus(req.body, status);
             return res
                 .status(200)
-                .json({ message: "External source status updated successfully", data: fecthedExternalSourcces });
+                .json({ message: MessageConstants.externalSource.statusUpdateSuccess, data: fecthedExternalSourcces });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error updating source", data: error });
+                .json({ message: MessageConstants.externalSource.statusUpdateError, data: error });
         }
     }
 }

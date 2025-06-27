@@ -20,11 +20,11 @@ export default class AdminController {
             const updatedUser = await this.adminService.handleGrantAdminAccess(req.body);
             return res
                 .status(200)
-                .json({ message: MessageConstants.accessGranted, data: updatedUser });
+                .json({ message: MessageConstants.access.success, data: updatedUser });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.accessGrantError, data: error });
+                .json({ message: MessageConstants.access.error, data: error });
         }
     }
 
@@ -33,11 +33,11 @@ export default class AdminController {
             const updatedUser = await this.adminService.handleRevokeAdminAccess(req.body);
             return res
                 .status(200)
-                .json({ message: MessageConstants.accessRevoked, data: updatedUser });
+                .json({ message: MessageConstants.access.revokedSuccess, data: updatedUser });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.accessRevokeError, data: error });
+                .json({ message: MessageConstants.access.revokedError, data: error });
         }
     }
 
@@ -46,11 +46,11 @@ export default class AdminController {
             const reportedArticles = await this.adminService.handleGetReports();
             return res
                 .status(200)
-                .json({ message: MessageConstants.reportsFetched, data: reportedArticles });
+                .json({ message: MessageConstants.reports.success, data: reportedArticles });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.reportsFetchError, data: error });
+                .json({ message: MessageConstants.reports.error, data: error });
         }
     }
 
@@ -59,11 +59,11 @@ export default class AdminController {
             const blockedArticle = await this.adminService.handleUpdateArticleStatus(req.body);
             return res
                 .status(200)
-                .json({ message: MessageConstants.articleUpdated, data: blockedArticle });
+                .json({ message: MessageConstants.articleUpdate.success, data: blockedArticle });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.articleUpdateError, data: error });
+                .json({ message: MessageConstants.articleUpdate.error, data: error });
         }
     }
 
@@ -72,11 +72,11 @@ export default class AdminController {
             const categories = await this.adminService.handleGetCategories();
             return res
                 .status(200)
-                .json({ message: MessageConstants.categoriesFetched, data: categories });
+                .json({ message: MessageConstants.categories.fetchSuccess, data: categories });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: MessageConstants.categoriesFetchError, data: error });
+                .json({ message: MessageConstants.categories.fetchError, data: error });
         }
     }
 
@@ -86,13 +86,13 @@ export default class AdminController {
             return res
                 .status(201)
                 .json({
-                    message: "Categories added successfully", data
+                    message: MessageConstants.categories.addSuccess, data
                         : createdCategory
                 });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error adding categories", data: error });
+                .json({ message: MessageConstants.categories.addError, data: error });
         }
     }
 
@@ -101,11 +101,11 @@ export default class AdminController {
             const createdCategory = await this.adminService.handleUpdateCategories(req.body);
             return res
                 .status(201)
-                .json({ message: "Categories updated successfully", data: createdCategory });
+                .json({ message: MessageConstants.categories.updateSuccess, data: createdCategory });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error updating categories", data: error });
+                .json({ message: MessageConstants.categories.updateError, data: error });
         }
     }
 }

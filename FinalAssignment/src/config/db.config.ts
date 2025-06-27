@@ -17,9 +17,9 @@ class Database {
         try {
             console.log(`${process.env.MONGODB_URI}`);
             const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}`);
-            console.log(`${MessageConstants.monogoConnected} ${connectionInstance.connection.host}`);
+            console.log(`${MessageConstants.mongoConnected.success} ${connectionInstance.connection.host}`);
         } catch (error) {
-            console.error(`${MessageConstants.mongoConncetionError} ${(error as Error).message}`);
+            console.error(`${MessageConstants.mongoConnected.error} ${(error as Error).message}`);
         }
     }
 }

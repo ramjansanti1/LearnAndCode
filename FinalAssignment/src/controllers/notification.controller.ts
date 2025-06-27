@@ -1,4 +1,5 @@
 import NotificationService from "../service/notification.service.js";
+import { MessageConstants } from "../constants/message.constants.js";
 
 export default class NotificationController {
     notificationService: NotificationService;
@@ -19,11 +20,11 @@ export default class NotificationController {
             const fetchedNotificationConfig = await this.notificationService.handleGetNotification(req.user);
             return res
                 .status(200)
-                .json({ message: "Notification config fetched successfully", data: fetchedNotificationConfig });
+                .json({ message: MessageConstants.notification.fetchSuccess, data: fetchedNotificationConfig });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error getting notification config", data: error });
+                .json({ message: MessageConstants.notification.fetchError, data: error });
         }
     }
 
@@ -32,11 +33,11 @@ export default class NotificationController {
             const fetchedNotificationConfig = await this.notificationService.handleGetNotificationConfig(req.user);
             return res
                 .status(200)
-                .json({ message: "Notification config fetched successfully", data: fetchedNotificationConfig });
+                .json({ message: MessageConstants.notification.fetchSuccess, data: fetchedNotificationConfig });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error getting notification config", data: error });
+                .json({ message: MessageConstants.notification.fetchError, data: error });
         }
     }
 
@@ -45,11 +46,11 @@ export default class NotificationController {
             const addedNotificationConfig = await this.notificationService.handleAddNotificationConfig(req.body, req.user);
             return res
                 .status(200)
-                .json({ message: "Notification config fetched successfully", data: addedNotificationConfig });
+                .json({ message: MessageConstants.notification.addSuccess, data: addedNotificationConfig });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error adding notification config", data: error });
+                .json({ message: MessageConstants.notification.addError, data: error });
         }
     }
 
@@ -58,11 +59,11 @@ export default class NotificationController {
             const addedCategory = await this.notificationService.handleAddCategoryToNotificationConfig(req.query.category, req.user);
             return res
                 .status(200)
-                .json({ message: "Category added successfully", data: addedCategory });
+                .json({ message: MessageConstants.notification.categoryAddSuccess, data: addedCategory });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error adding category", data: error });
+                .json({ message: MessageConstants.notification.categoryAddError, data: error });
         }
     }
 
@@ -71,11 +72,11 @@ export default class NotificationController {
             const removedCategory = await this.notificationService.handleRemoveCategoryToNotificationConfig(req.query.category, req.user);
             return res
                 .status(200)
-                .json({ message: "Category removed successfully", data: removedCategory });
+                .json({ message: MessageConstants.notification.categoryRemoveSuccess, data: removedCategory });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error removed category", data: error });
+                .json({ message: MessageConstants.notification.categoryRemoveError, data: error });
         }
     }
 
@@ -84,11 +85,11 @@ export default class NotificationController {
             const addedKeyword = await this.notificationService.handleAddKeywordToNotificationConfig(req.query.keyword, req.user);
             return res
                 .status(200)
-                .json({ message: "Keyword added successfully", data: addedKeyword });
+                .json({ message: MessageConstants.notification.keywordAddSuccess, data: addedKeyword });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error adding Keyword", data: error });
+                .json({ message: MessageConstants.notification.keywordAddError, data: error });
         }
     }
 
@@ -97,11 +98,11 @@ export default class NotificationController {
             const removedKeyword = await this.notificationService.handleRemoveKeywordToNotificationConfig(req.query.keyword, req.user);
             return res
                 .status(200)
-                .json({ message: "Keyword removed successfully", data: removedKeyword });
+                .json({ message: MessageConstants.notification.keywordRemoveSuccess, data: removedKeyword });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error removed Keyword", data: error });
+                .json({ message: MessageConstants.notification.keywordRemoveError, data: error });
         }
     }
 }

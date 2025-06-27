@@ -1,4 +1,5 @@
 import NewsService from "../service/newsServices/news.service.js";
+import { MessageConstants } from "../constants/message.constants.js";
 
 class NewsController {
     newsService: NewsService;
@@ -20,7 +21,8 @@ class NewsController {
         const { category, searchQuery } = req.query;
         if (category) {
             fetchedNews = await this.newsService.handleGetNewsBycategory(category);
-        } else if (searchQuery) {
+        }
+        else if (searchQuery) {
             fetchedNews = await this.newsService.handleGetNewsBySearchQuery(searchQuery);
         }
         else {
@@ -34,11 +36,11 @@ class NewsController {
             let fetchedNews = await this.getNewsBasedOnPrefrence(req);
             return res
                 .status(200)
-                .json({ message: "News fetched successfully", data: fetchedNews });
+                .json({ message: MessageConstants.news.fetchSuccess, data: fetchedNews });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error fetching news", data: error });
+                .json({ message: MessageConstants.news.fetchError, data: error });
         }
     }
 
@@ -47,11 +49,11 @@ class NewsController {
             let fetchedNews = await this.newsService.handleGetNewsByDate(req.query);
             return res
                 .status(200)
-                .json({ message: "News fetched successfully", data: fetchedNews });
+                .json({ message: MessageConstants.news.fetchSuccess, data: fetchedNews });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error fetching news", data: error });
+                .json({ message: MessageConstants.news.fetchError, data: error });
         }
     }
 
@@ -60,11 +62,11 @@ class NewsController {
             let savedArticles = await this.newsService.handleGetSavedNewsArticle(req.user);
             return res
                 .status(200)
-                .json({ message: "Article fetched successfully", data: savedArticles });
+                .json({ message: MessageConstants.article.fetchSuccess, data: savedArticles });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error saving article", data: error });
+                .json({ message: MessageConstants.article.fetchError, data: error });
         }
     }
 
@@ -73,11 +75,11 @@ class NewsController {
             let savedArticle = await this.newsService.handleSaveNewsArticle(req.query.articleId, req.user);
             return res
                 .status(200)
-                .json({ message: "Article saved successfully", data: savedArticle });
+                .json({ message: MessageConstants.article.saveSuccess, data: savedArticle });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error saving article", data: error });
+                .json({ message: MessageConstants.article.saveError, data: error });
         }
     }
 
@@ -86,11 +88,11 @@ class NewsController {
             let savedArticle = await this.newsService.handleDeleteNewsArticle(req.query.articleId, req.user);
             return res
                 .status(200)
-                .json({ message: "Article deleted successfully", data: savedArticle });
+                .json({ message: MessageConstants.article.deleteSuccess, data: savedArticle });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error saving article", data: error });
+                .json({ message: MessageConstants.article.deleteError, data: error });
         }
     }
 
@@ -99,11 +101,11 @@ class NewsController {
             let savedArticle = await this.newsService.handlelikeArticle(req.query.articleId);
             return res
                 .status(200)
-                .json({ message: "Article liked successfully", data: savedArticle });
+                .json({ message: MessageConstants.article.likeSuccess, data: savedArticle });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error liking article", data: error });
+                .json({ message: MessageConstants.article.likeError, data: error });
         }
     }
 
@@ -112,11 +114,11 @@ class NewsController {
             let savedArticle = await this.newsService.handleDislikeArticle(req.query.articleId);
             return res
                 .status(200)
-                .json({ message: "Article deleted successfully", data: savedArticle });
+                .json({ message: MessageConstants.article.dislikeSuccess, data: savedArticle });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error saving article", data: error });
+                .json({ message: MessageConstants.article.dislikeError, data: error });
         }
     }
 
@@ -125,11 +127,11 @@ class NewsController {
             let reportedArticle = await this.newsService.handleReportArticle(req.query.articleId, req.user);
             return res
                 .status(200)
-                .json({ message: "Article deleted successfully", data: reportedArticle });
+                .json({ message: MessageConstants.article.reportSuccess, data: reportedArticle });
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error saving article", data: error });
+                .json({ message: MessageConstants.article.reportError, data: error });
         }
     }
 }
