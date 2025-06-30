@@ -104,5 +104,10 @@ export class MessageConstants {
         savedArticle: "SavedArticle"
     }
 
+    static externalNewsApi = {
+        insertError: "Erro inserting article:",
+        duplicateSkipped: "Duplicate entry skipped: "
+    }
+
     static serverListeningMessage = "The server is listening on PORT:";
 }

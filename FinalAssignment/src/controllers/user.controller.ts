@@ -6,12 +6,10 @@ import { MessageConstants } from "../constants/message.constants.js";
 class UserController {
     userService: UserService;
     notificationService: NotificationService;
-    emailService: EmailService;
 
     constructor() {
         this.userService = new UserService();
         this.notificationService = new NotificationService();
-        this.emailService = new EmailService();
         this.signup = this.signup.bind(this);
         this.login = this.login.bind(this);
         this.changePassword = this.changePassword.bind(this);
@@ -32,9 +30,10 @@ class UserController {
 
     async login(req: any, res: any) {
         try {
+            let emailService = new EmailService();
             const loginResponse = await this.userService.handleLogin(req.body);
-            this.notificationService.startNotificationScheduler(loginResponse.userFromDatabase as { [key: string]: any });
-            this.emailService.startEmailScheduler(loginResponse.userFromDatabase as { [key: string]: any });
+            await this.notificationService.startNotificationScheduler(loginResponse.userFromDatabase as { [key: string]: any });
+            emailService.startEmailScheduler(loginResponse.userFromDatabase as { [key: string]: any });
             return res
                 .status(200)
                 .cookie("accessToken", loginResponse.accessToken)

@@ -22,8 +22,8 @@ export default class ExternalNewsService {
     }
 
     async fetchNews() {
-        // await this.fetchNewsFromApi(this.newsApiInstance);
-        // await this.fetchNewsFromApi(this.theNewsApiInstance);
+        await this.fetchNewsFromApi(this.newsApiInstance);
+        await this.fetchNewsFromApi(this.theNewsApiInstance);
     }
 
     async fetchNewsFromApi(newsSourceInstance: NewsApiService | TheNewsApiService) {
@@ -39,11 +39,19 @@ export default class ExternalNewsService {
     }
 
     protected async addDataToDb(articles: { [key: string]: any }[]) {
-        articles.forEach(async (article) => {
-            let news = await News.create(article);
-            if (!news) {
-                throw new Error(MessageConstants.externalSource.addError);
+        for (const article of articles) {
+            try {
+                const news = await News.create(article);
+                if (!news) {
+                    console.error(`${MessageConstants.externalNewsApi.insertError}${article.title}`);
+                }
+            } catch (err: any) {
+                if (err.code === 11000) {
+                    console.warn(`${MessageConstants.externalNewsApi.duplicateSkipped}${article.title}`);
+                } else {
+                    console.error(`${MessageConstants.externalNewsApi.insertError} ${article.title}:`, err);
+                }
             }
-        });
+        }
     }
 }

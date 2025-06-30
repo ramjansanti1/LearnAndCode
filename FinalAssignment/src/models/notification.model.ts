@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MessageConstants } from "../constants/message.constants";
+import { MessageConstants } from "../constants/message.constants.js";
 
 const notificationSchema = new mongoose.Schema(
     {
@@ -9,14 +9,15 @@ const notificationSchema = new mongoose.Schema(
         },
         articleId: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         url: {
             type: String,
             required: true
         },
         sentOverMail: {
-            type: String,
+            type: Boolean,
             required: true,
             default: false
         }

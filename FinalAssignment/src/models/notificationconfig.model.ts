@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MessageConstants } from "../constants/message.constants";
+import { MessageConstants } from "../constants/message.constants.js";
 
 const notificationConfigSchema = new mongoose.Schema(
     {

@@ -19,7 +19,7 @@ export default class UserRouter {
             .post(userController.signup);
 
         this.router
-            .route(RouteConstants.user.login)
+            .route('/login')
             .post(userController.login);
 
         this.router

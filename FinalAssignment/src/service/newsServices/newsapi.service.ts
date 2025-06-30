@@ -16,6 +16,7 @@ export default class NewsApiService implements ExternalNewsService {
                 category: category,
                 source: article.source.name,
                 url: article.url,
+                imageUrl: article.urlToImage,
                 likes: 0,
                 dislikes: 0
             });

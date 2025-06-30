@@ -23,16 +23,16 @@ export class RouteConstants {
     }
 
     static notification = {
-        config: "config",
-        addCategory: "addCategory",
-        removeCategory: "removeCategory",
-        addKeyWord: "addKeyWord",
-        removeKeyword: "removeKeyword"
+        config: "/config",
+        addCategory: "/addCategory",
+        removeCategory: "/removeCategory",
+        addKeyWord: "/addKeyWord",
+        removeKeyword: "/removeKeyword"
     }
 
     static user = {
-        signup: "signup",
-        login: "login",
-        changepassword: "changepassword"
+        signup: "/signup",
+        login: "/login",
+        changepassword: "/changepassword"
     }
 }

@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
-import { MessageConstants } from "../constants/message.constants";
+import { MessageConstants } from "../constants/message.constants.js";
 
 const newsSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         content: {
             type: String
@@ -21,6 +22,10 @@ const newsSchema = new mongoose.Schema(
         url: {
             type: String,
             required: true
+        },
+        imageUrl: {
+            type: String,
+            required: false
         },
         blocked: {
             type: Boolean,
@@ -42,7 +47,7 @@ const newsSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-        autoIndex: false
+        autoIndex: true
     }
 );
 
