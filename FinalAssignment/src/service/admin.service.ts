@@ -1,6 +1,7 @@
 import News from "../models/news.model.js";
 import User from "../models/user.model.js";
 import Category from "../models/category.model.js";
+import { MessageConstants } from "../constants/message.constants.js";
 
 export default class AdminService {
     private async updateAccessInDb(userData: { [key: string]: any }, isAdmin: Boolean) {
@@ -32,7 +33,7 @@ export default class AdminService {
     async handleUpdateArticleStatus(articleData: { [key: string]: any }) {
         const fetchedArticle = await News.findById(articleData.articleId);
         if (!fetchedArticle) {
-            throw new Error("Article not found");
+            throw new Error(MessageConstants.article.notFound);
         }
         if (fetchedArticle.blocked) {
             fetchedArticle.blocked = articleData.status;
@@ -44,7 +45,7 @@ export default class AdminService {
     async handleGetCategories() {
         const categories = await Category.find();
         if (!categories) {
-            throw new Error("Error fetching category");
+            throw new Error(MessageConstants.categories.fetchError);
         }
         return categories;
     }
@@ -55,7 +56,7 @@ export default class AdminService {
             status: categoryData.status
         });
         if (!createdCategory) {
-            throw new Error("Error creating category");
+            throw new Error(MessageConstants.categories.addError);
         }
         return createdCategory;
     }
@@ -63,7 +64,7 @@ export default class AdminService {
     async handleUpdateCategories(categoryData: { [key: string]: any }) {
         const fetchedCategory = await Category.findOne({ category: categoryData.category });
         if (!fetchedCategory) {
-            throw new Error("Error updating category");
+            throw new Error(MessageConstants.categories.updateError);
         }
         if (fetchedCategory?.status) fetchedCategory.status = categoryData.status;
         await fetchedCategory?.save({ validateBeforeSave: false });

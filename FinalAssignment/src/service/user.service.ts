@@ -1,3 +1,4 @@
+import { MessageConstants } from "../constants/message.constants.js";
 import User from "../models/user.model.js";
 
 export default class UserService {
@@ -16,7 +17,7 @@ export default class UserService {
         });
         const isPasswordValid = await userFromDatabase?.isPasswordCorrect(userData.password);
         if (!isPasswordValid) {
-            throw new Error("INVALID_PASSWORD_ERROR");
+            throw new Error(MessageConstants.user.incorrectPassword);
         }
         const accessToken = userFromDatabase?.generateAccessToken();
         return {
@@ -31,7 +32,7 @@ export default class UserService {
         });
         const isPasswordCorrect = await userFromDatabase?.isPasswordCorrect(userData.oldPassword);
         if (!isPasswordCorrect) {
-            throw new Error("UNAUTHORIZED_ACCESS_ERROR");
+            throw new Error(MessageConstants.user.incorrectPassword);
         }
         if (userFromDatabase) {
             userFromDatabase.password = userData.newPassword;

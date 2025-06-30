@@ -59,6 +59,8 @@ export class MessageConstants {
         dislikeError: "Error disliking article",
         reportSuccess: "Article reported successfully",
         reportError: "Error reporting article",
+        notFound: "Article not found",
+        saveNotFound: "Saved article not found"
     };
 
     static notification = {
@@ -83,6 +85,7 @@ export class MessageConstants {
         loginError: "Error logging in",
         passwordChangeSuccess: "Password changed successfully",
         passwordChangeError: "Error changing password",
+        incorrectPassword: "Please enter valid password"
     };
 
     static middleware = {
@@ -100,4 +103,6 @@ export class MessageConstants {
         notificationConfig: "NotificationConfig",
         savedArticle: "SavedArticle"
     }
+
+    static serverListeningMessage = "The server is listening on PORT:";
 }

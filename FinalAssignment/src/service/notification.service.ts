@@ -1,6 +1,7 @@
 import NotificationConfig from "../models/notificationconfig.model.js";
 import News from "../models/news.model.js";
 import Notification from "../models/notification.model.js";
+import { MessageConstants } from "../constants/message.constants.js";
 
 export default class NotificationService {
     async startNotificationScheduler(user: { [key: string]: any }) {
@@ -31,7 +32,7 @@ export default class NotificationService {
     async handleGetNotification(user: { [key: string]: any }) {
         const notifications = await Notification.find({ userId: user._id });
         if (!notifications) {
-            throw new Error("No config found");
+            throw new Error(MessageConstants.notification.fetchError);
         }
         return notifications;
     }
@@ -39,7 +40,7 @@ export default class NotificationService {
     async handleGetNotificationConfig(user: { [key: string]: any }) {
         const notificationConfig = await NotificationConfig.find({ userId: user._id });
         if (!notificationConfig) {
-            throw new Error("No config found");
+            throw new Error(MessageConstants.notification.fetchError);
         }
         return notificationConfig;
     }
@@ -53,7 +54,7 @@ export default class NotificationService {
             }
         );
         if (!notificationConfig) {
-            throw new Error("No config found");
+            throw new Error(MessageConstants.notification.fetchError);
         }
         return notificationConfig;
     }
@@ -65,7 +66,7 @@ export default class NotificationService {
             { new: true }
         );
         if (!updatedNotificationConfig) {
-            throw new Error("No config found");
+            throw new Error(MessageConstants.notification.fetchError);
         }
         return updatedNotificationConfig;
     }
@@ -77,7 +78,7 @@ export default class NotificationService {
             { new: true }
         );
         if (!updatedNotificationConfig) {
-            throw new Error("No config found");
+            throw new Error(MessageConstants.notification.fetchError);
         }
         return updatedNotificationConfig;
     }
@@ -89,7 +90,7 @@ export default class NotificationService {
             { new: true }
         );
         if (!updatedNotificationConfig) {
-            throw new Error("No config found");
+            throw new Error(MessageConstants.notification.fetchError);
         }
         return updatedNotificationConfig;
     }
@@ -101,7 +102,7 @@ export default class NotificationService {
             { new: true }
         );
         if (!updatedNotificationConfig) {
-            throw new Error("No config found");
+            throw new Error(MessageConstants.notification.fetchError);
         }
         return updatedNotificationConfig;
     }

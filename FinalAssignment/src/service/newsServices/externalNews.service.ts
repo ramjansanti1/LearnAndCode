@@ -2,6 +2,7 @@ import News from "../../models/news.model.js";
 import NewsApiService from "./newsapi.service.js";
 import TheNewsApiService from "./theNewsApi.service.js";
 import Category from "../../models/category.model.js";
+import { MessageConstants } from "../../constants/message.constants.js";
 
 export default class ExternalNewsService {
     private newsApiInstance: NewsApiService;
@@ -41,7 +42,7 @@ export default class ExternalNewsService {
         articles.forEach(async (article) => {
             let news = await News.create(article);
             if (!news) {
-                console.error("Error adding Data");
+                throw new Error(MessageConstants.externalSource.addError);
             }
         });
     }

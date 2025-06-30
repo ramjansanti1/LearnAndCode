@@ -1,3 +1,4 @@
+import { MessageConstants } from "../../constants/message.constants.js";
 import News from "../../models/news.model.js";
 import SavedArticle from "../../models/savedArticle.model.js";
 
@@ -44,7 +45,7 @@ export default class NewsService {
             userId: user._id
         });
         if (!savedArticles) {
-            throw new Error("Saved article not found");
+            throw new Error(MessageConstants.article.saveNotFound);
         }
         for (const article of savedArticles) {
             const fetchedArticle = await News.findById(article.articleId);
@@ -59,7 +60,7 @@ export default class NewsService {
             userId: user._id
         });
         if (!savedArticle) {
-            throw new Error("Saved article not found");
+            throw new Error(MessageConstants.article.saveNotFound);
         }
         return savedArticle;
     }
@@ -70,9 +71,9 @@ export default class NewsService {
             userId: user._id
         });
         if (!deletedArticle) {
-            throw new Error("Saved article not found");
+            throw new Error(MessageConstants.article.saveNotFound);
         }
-        return { message: "Article deleted successfully", data: deletedArticle };
+        return deletedArticle;
     }
 
     async handlelikeArticle(articleId: string) {
@@ -104,7 +105,7 @@ export default class NewsService {
     private async getArticle(articleId: string) {
         const articleFromDb = await News.findById(articleId);
         if (!articleFromDb) {
-            throw new Error("Article not found");
+            throw new Error(MessageConstants.article.notFound);
         }
         return articleFromDb;
     }

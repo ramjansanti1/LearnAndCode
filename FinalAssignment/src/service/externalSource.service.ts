@@ -1,10 +1,11 @@
+import { MessageConstants } from "../constants/message.constants.js";
 import ExternalSource from "../models/externalSource.model.js"
 
 export default class ExternalSourceService {
     async handleGetExternalSource() {
         const fecthedExternalSourcces = await ExternalSource.find({});
         if (!fecthedExternalSourcces) {
-            throw new Error("No external source found");
+            throw new Error(MessageConstants.externalSource.fetchError);
         }
         return fecthedExternalSourcces;
     }
@@ -17,7 +18,7 @@ export default class ExternalSourceService {
             }
         );
         if (!addedExternalSource) {
-            throw new Error("Error adding source");
+            throw new Error(MessageConstants.externalSource.addError);
         }
         return addedExternalSource;
     }
@@ -25,7 +26,7 @@ export default class ExternalSourceService {
     async handleUpdateApiKey(apiData: { [key: string]: any }) {
         const fecthedExternalSources = await ExternalSource.findOne({ serverName: apiData.serverName });
         if (!fecthedExternalSources) {
-            throw new Error("No external source found");
+            throw new Error(MessageConstants.externalSource.fetchError);
         }
         if (fecthedExternalSources) {
             fecthedExternalSources.apiKey = apiData.apiKey;
@@ -37,7 +38,7 @@ export default class ExternalSourceService {
     async handleUpdateStatus(serverData: { [key: string]: any }, status: 'active' | 'inactive') {
         const fecthedExternalSources = await ExternalSource.findOne({ serverName: serverData.serverName });
         if (!fecthedExternalSources) {
-            throw new Error("No external source found");
+            throw new Error(MessageConstants.externalSource.fetchError);
         }
         if (fecthedExternalSources) {
             fecthedExternalSources.status = status;
