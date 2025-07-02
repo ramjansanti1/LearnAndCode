@@ -2,9 +2,10 @@ import News from "../models/news.model.js";
 import User from "../models/user.model.js";
 import Category from "../models/category.model.js";
 import { MessageConstants } from "../constants/message.constants.js";
+import { customObject } from "../types/types.js";
 
 export default class AdminService {
-    private async updateAccessInDb(userData: { [key: string]: any }, isAdmin: Boolean) {
+    private async updateAccessInDb(userData: customObject, isAdmin: Boolean) {
         const userFromDatabase = await User.findOne({ email: userData.email });
         if (userFromDatabase) {
             userFromDatabase.isAdmin = isAdmin;
@@ -13,12 +14,12 @@ export default class AdminService {
         return userFromDatabase;
     }
 
-    async handleGrantAdminAccess(userData: { [key: string]: any }) {
+    async handleGrantAdminAccess(userData: customObject) {
         const userFromDatabase = await this.updateAccessInDb(userData, true);
         return userFromDatabase;
     }
 
-    async handleRevokeAdminAccess(userData: { [key: string]: any }) {
+    async handleRevokeAdminAccess(userData: customObject) {
         const userFromDatabase = await this.updateAccessInDb(userData, false);
         return userFromDatabase;
     }
@@ -30,7 +31,7 @@ export default class AdminService {
         return reportedArticles;
     }
 
-    async handleUpdateArticleStatus(articleData: { [key: string]: any }) {
+    async handleUpdateArticleStatus(articleData: customObject) {
         const fetchedArticle = await News.findById(articleData.articleId);
         if (!fetchedArticle) {
             throw new Error(MessageConstants.article.notFound);
@@ -50,7 +51,7 @@ export default class AdminService {
         return categories;
     }
 
-    async handleAddCategories(categoryData: { [key: string]: any }) {
+    async handleAddCategories(categoryData: customObject) {
         const createdCategory = await Category.create({
             category: categoryData.category,
             status: categoryData.status
@@ -61,7 +62,7 @@ export default class AdminService {
         return createdCategory;
     }
 
-    async handleUpdateCategories(categoryData: { [key: string]: any }) {
+    async handleUpdateCategories(categoryData: customObject) {
         const fetchedCategory = await Category.findOne({ category: categoryData.category });
         if (!fetchedCategory) {
             throw new Error(MessageConstants.categories.updateError);

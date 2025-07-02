@@ -2,6 +2,7 @@ import UserService from "../service/user.service.js";
 import NotificationService from "../service/notification.service.js";
 import EmailService from '../service/emailServices/email.sercvice.js';
 import { MessageConstants } from "../constants/message.constants.js";
+import { customObject } from "../types/types.js";
 
 class UserController {
     userService: UserService;
@@ -32,8 +33,8 @@ class UserController {
         try {
             let emailService = new EmailService();
             const loginResponse = await this.userService.handleLogin(req.body);
-            await this.notificationService.startNotificationScheduler(loginResponse.userFromDatabase as { [key: string]: any });
-            emailService.startEmailScheduler(loginResponse.userFromDatabase as { [key: string]: any });
+            await this.notificationService.startNotificationScheduler(loginResponse.userFromDatabase as customObject);
+            emailService.startEmailScheduler(loginResponse.userFromDatabase as customObject);
             return res
                 .status(200)
                 .cookie("accessToken", loginResponse.accessToken)

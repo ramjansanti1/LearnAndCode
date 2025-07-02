@@ -1,6 +1,7 @@
 import { MessageConstants } from "../../constants/message.constants.js";
 import News from "../../models/news.model.js";
 import SavedArticle from "../../models/savedArticle.model.js";
+import { customObject } from "../../types/types.js";
 
 export default class NewsService {
     async handleGetNews() {
@@ -24,7 +25,7 @@ export default class NewsService {
         return news;
     }
 
-    async handleGetNewsByDate(dateData: { [key: string]: any }) {
+    async handleGetNewsByDate(dateData: customObject) {
         const { startDate, endDate } = dateData;
         const start = new Date(startDate as string);
         const end = new Date(endDate as string);
@@ -39,8 +40,8 @@ export default class NewsService {
         return news;
     }
 
-    async handleGetSavedNewsArticle(user: { [key: string]: any }) {
-        let articles: { [key: string]: any } = [];
+    async handleGetSavedNewsArticle(user: customObject) {
+        let articles: customObject = [];
         const savedArticles = await SavedArticle.find({
             userId: user._id
         });
@@ -54,7 +55,7 @@ export default class NewsService {
         return articles;
     }
 
-    async handleSaveNewsArticle(articleId: string, user: { [key: string]: any }) {
+    async handleSaveNewsArticle(articleId: string, user: customObject) {
         const savedArticle = await SavedArticle.create({
             articleId,
             userId: user._id
@@ -65,7 +66,7 @@ export default class NewsService {
         return savedArticle;
     }
 
-    async handleDeleteNewsArticle(articleId: string, user: { [key: string]: any }) {
+    async handleDeleteNewsArticle(articleId: string, user: customObject) {
         const deletedArticle = await SavedArticle.findOneAndDelete({
             articleId,
             userId: user._id
@@ -90,7 +91,7 @@ export default class NewsService {
         return articleFromDb;
     }
 
-    async handleReportArticle(articleId: string, user: { [key: string]: any }) {
+    async handleReportArticle(articleId: string, user: customObject) {
         const articleFromDb = await this.getArticle(articleId);
         if (articleFromDb.reports.length >= Number(process.env.REPORT_THRESHOLD)) {
             articleFromDb.blocked = true;

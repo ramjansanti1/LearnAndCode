@@ -1,5 +1,6 @@
 import axios from "axios";
 import ExternalNewsService from "../../interfaces/news.interface.js";
+import { customObject } from "../../types/types.js";
 
 export default class TheNewsApiService implements ExternalNewsService {
     async fetchNewsFromExternalApiByCategory(category: string) {
@@ -8,7 +9,7 @@ export default class TheNewsApiService implements ExternalNewsService {
     }
 
     processArticlesToStoreInDB(articles: any[], category: string) {
-        let processedArticles: { [key: string]: any }[] = [];
+        let processedArticles: customObject[] = [];
         articles.forEach((article) => {
             processedArticles.push({
                 title: article.title,

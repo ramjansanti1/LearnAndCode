@@ -1,5 +1,6 @@
 import { MessageConstants } from "../constants/message.constants.js";
 import ExternalSource from "../models/externalSource.model.js"
+import { customObject } from "../types/types.js";
 
 export default class ExternalSourceService {
     async handleGetExternalSource() {
@@ -10,7 +11,7 @@ export default class ExternalSourceService {
         return fecthedExternalSourcces;
     }
 
-    async handleAddExternalSource(externalSourceData: { [key: string]: any }) {
+    async handleAddExternalSource(externalSourceData: customObject) {
         const addedExternalSource = await ExternalSource.create(
             {
                 serverName: externalSourceData.serverName,
@@ -23,7 +24,7 @@ export default class ExternalSourceService {
         return addedExternalSource;
     }
 
-    async handleUpdateApiKey(apiData: { [key: string]: any }) {
+    async handleUpdateApiKey(apiData: customObject) {
         const fecthedExternalSources = await ExternalSource.findOne({ serverName: apiData.serverName });
         if (!fecthedExternalSources) {
             throw new Error(MessageConstants.externalSource.fetchError);
@@ -35,7 +36,7 @@ export default class ExternalSourceService {
         return fecthedExternalSources;
     }
 
-    async handleUpdateStatus(serverData: { [key: string]: any }, status: 'active' | 'inactive') {
+    async handleUpdateStatus(serverData: customObject, status: 'active' | 'inactive') {
         const fecthedExternalSources = await ExternalSource.findOne({ serverName: serverData.serverName });
         if (!fecthedExternalSources) {
             throw new Error(MessageConstants.externalSource.fetchError);

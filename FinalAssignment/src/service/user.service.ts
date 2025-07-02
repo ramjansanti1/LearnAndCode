@@ -1,8 +1,9 @@
 import { MessageConstants } from "../constants/message.constants.js";
 import User from "../models/user.model.js";
+import { customObject } from "../types/types.js";
 
 export default class UserService {
-    async handleSignup(userData: { [key: string]: any }) {
+    async handleSignup(userData: customObject) {
         const user = await User.create({
             userName: userData.userName,
             email: userData.email,
@@ -11,7 +12,7 @@ export default class UserService {
         return user;
     }
 
-    async handleLogin(userData: { [key: string]: any }) {
+    async handleLogin(userData: customObject) {
         const userFromDatabase = await User.findOne({
             $or: [{ userName: userData.userName }, { email: userData.email }]
         });
@@ -26,7 +27,7 @@ export default class UserService {
         }
     }
 
-    async handleChangePassword(userData: { [key: string]: any }) {
+    async handleChangePassword(userData: customObject) {
         const userFromDatabase = await User.findOne({
             $or: [{ userName: userData.userName }, { email: userData.email }]
         });

@@ -3,6 +3,7 @@ import NewsApiService from "./newsapi.service.js";
 import TheNewsApiService from "./theNewsApi.service.js";
 import Category from "../../models/category.model.js";
 import { MessageConstants } from "../../constants/message.constants.js";
+import { customObject } from "../../types/types.js";
 
 export default class ExternalNewsService {
     private newsApiInstance: NewsApiService;
@@ -38,7 +39,7 @@ export default class ExternalNewsService {
         });
     }
 
-    protected async addDataToDb(articles: { [key: string]: any }[]) {
+    protected async addDataToDb(articles: customObject[]) {
         for (const article of articles) {
             try {
                 const news = await News.create(article);

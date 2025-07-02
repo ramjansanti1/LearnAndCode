@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import Notification from '../../models/notification.model.js';
 import News from '../../models/news.model.js';
+import { customObject } from '../../types/types.js';
 
 export default class Nodemailer {
     transporter: any
@@ -16,7 +17,7 @@ export default class Nodemailer {
         });
     }
 
-    async startEmailScheduler(user: { [key: string]: any }) {
+    async startEmailScheduler(user: customObject) {
         console.log("Email started");
         await this.sendNotification(user);
         setInterval(async () => {
@@ -24,7 +25,7 @@ export default class Nodemailer {
         }, 86400000);
     }
 
-    async sendNotification(user: { [key: string]: any }) {
+    async sendNotification(user: customObject) {
         try {
             const notification = await Notification.findOne({ userId: user._id, sentOverMail: false });
             if (!notification) return console.log("No notification found");
