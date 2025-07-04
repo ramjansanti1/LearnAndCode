@@ -23,8 +23,8 @@ export default class ExternalNewsService {
     }
 
     async fetchNews() {
-        await this.fetchNewsFromApi(this.newsApiInstance);
-        await this.fetchNewsFromApi(this.theNewsApiInstance);
+        // await this.fetchNewsFromApi(this.newsApiInstance);
+        // await this.fetchNewsFromApi(this.theNewsApiInstance);
     }
 
     async fetchNewsFromApi(newsSourceInstance: NewsApiService | TheNewsApiService) {

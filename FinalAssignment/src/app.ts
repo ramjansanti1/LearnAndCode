@@ -9,7 +9,7 @@ import AdminRouter from './routes/admin.route.js';
 const app = express();
 
 app.use(cors({
-  origin: 'http://127.0.0.1:5500',
+  origin: 'http://localhost:5173',
   methods: ['POST', 'GET', 'PATCH', 'DELETE'],
   credentials: true
 }));
