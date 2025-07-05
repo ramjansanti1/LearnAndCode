@@ -10,7 +10,7 @@ export default class NewsService {
     }
 
     async handleGetNewsBycategory(category: string) {
-        const news = await News.find({ category, blocked: false }).sort({ likes: 1 }).limit(20);
+        const news = await News.find({ category, blocked: false }).sort({ likes: -1 }).limit(20);
         return news;
     }
 
@@ -21,7 +21,7 @@ export default class NewsService {
                 { content: { $regex: searchQuery, $options: 'i' } },
                 { description: { $regex: searchQuery, $options: 'i' } }
             ]
-        }).sort({ likes: 1 }).limit(20);
+        }).sort({ likes: -1 }).limit(20);
         return news;
     }
 
@@ -35,7 +35,7 @@ export default class NewsService {
                 createdAt: { $gte: start, $lte: end },
                 blocked: false
             })
-            .sort({ likes: 1 })
+            .sort({ likes: -1 })
             .limit(20);
         return news;
     }
@@ -49,7 +49,7 @@ export default class NewsService {
             throw new Error(MessageConstants.article.saveNotFound);
         }
         for (const article of savedArticles) {
-            const fetchedArticle = await News.findById(article.articleId);
+            const fetchedArticle = await News.findById(article.savedArticleId);
             articles.push(fetchedArticle);
         }
         return articles;
@@ -57,7 +57,7 @@ export default class NewsService {
 
     async handleSaveNewsArticle(articleId: string, user: customObject) {
         const savedArticle = await SavedArticle.create({
-            articleId,
+            savedArticleId: `${articleId}-${user._id}`,
             userId: user._id
         });
         if (!savedArticle) {

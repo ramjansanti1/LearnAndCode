@@ -7,7 +7,7 @@ const notificationSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        articleId: {
+        notificationArticleId: {
             type: String,
             required: true,
             unique: true
@@ -24,7 +24,7 @@ const notificationSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-        autoIndex: false
+        autoIndex: true
     }
 );
 

@@ -3,9 +3,10 @@ import { MessageConstants } from "../constants/message.constants.js";
 
 const savedArticleSchema = new mongoose.Schema(
     {
-        articleId: {
+        savedArticleId: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         userId: {
             type: String
@@ -13,7 +14,7 @@ const savedArticleSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-        autoIndex: false
+        autoIndex: true
     }
 );
 

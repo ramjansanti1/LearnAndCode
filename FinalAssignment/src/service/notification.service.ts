@@ -13,19 +13,24 @@ export default class NotificationService {
     }
 
     private async createNotification(user: customObject) {
-        let news: customObject[] = [];
-        const notificationConfig = await NotificationConfig.findOne({ userId: user._id });
-        if (!notificationConfig) return;
-        for (const category of notificationConfig.categoryPreference) {
-            const fetchedNews = await News.find({ category, blocked: false }).limit(2);
-            news.push(...fetchedNews);
+        try {
+            let news: customObject[] = [];
+            const notificationConfig = await NotificationConfig.findOne({ userId: user._id });
+            if (!notificationConfig) return;
+            for (const category of notificationConfig.categoryPreference) {
+                const fetchedNews = await News.find({ category, blocked: false }).limit(2);
+                news.push(...fetchedNews);
+            }
+            for (const article of news) {
+                await Notification.create({
+                    userId: user._id,
+                    notificationArticleId: `${user._id}-${article._id.toString()}`,
+                    url: article.url
+                });
+            }
         }
-        for (const article of news) {
-            await Notification.create({
-                userId: user._id,
-                articleId: article._id.toString(),
-                url: article.url
-            });
+        catch (error) {
+            console.error(error);
         }
     }
 
