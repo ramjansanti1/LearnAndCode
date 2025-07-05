@@ -18,8 +18,9 @@
                 <li onclick="toggleCategoryMenu()" style="cursor: pointer;">
                     Categories
                 </li>
-                <li><a onclick="getNewsBasedOnCategory('general')">Saved Articles</a></li>
-                <li><a onclick="getNewsBasedOnCategory('general')">Notifications</a></li>
+                <li><a onclick="getSavedNews()">Saved Articles</a></li>
+                <li><a onclick="getNotifications()">Notifications</a></li>
+                <li><a onclick="getNewsBasedOnCategory('general')">Notification Configure</a></li>
                 <li><a onclick="getNewsBasedOnCategory('general')">Logout</a></li>
             </ul>
         </nav>
@@ -34,9 +35,22 @@
         </ul>
     </header>
 
-    <main class="news-container" id="newsContainer">
-
-    </main>
+    <main class="news-container" id="newsContainer"></main>
+    <div id="notificationContainer">
+        <div class="notification-card">
+            <div class="notification-header">
+                <span class="timestamp">2025-07-04 11:39</span>
+            </div>
+            <div class="notification-body">
+                <p><strong>Article ID:</strong> 685470c41e80f3fc8d309ab5-68622baad238ad2159184109</p>
+                <p><strong>User ID:</strong> 685470c41e80f3fc8d309ab5</p>
+                <a href="https://www.nintendolife.com/news/2025/06/here-are-the-square-enix-switch-games-you-can-play-on-switch-2-right-now1"
+                    target="_blank">
+                    View Article ↗
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 <script type="module" src="../../src/controllers/user.homepage.ts"></script>
 

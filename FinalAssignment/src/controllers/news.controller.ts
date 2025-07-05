@@ -98,7 +98,7 @@ class NewsController {
 
     async likeArticle(req: any, res: any) {
         try {
-            let savedArticle = await this.newsService.handlelikeArticle(req.query.articleId);
+            let savedArticle = await this.newsService.handlelikeArticle(req.query.articleId, req.user);
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.likeSuccess, data: savedArticle });
@@ -111,7 +111,7 @@ class NewsController {
 
     async dislikeArticle(req: any, res: any) {
         try {
-            let savedArticle = await this.newsService.handleDislikeArticle(req.query.articleId);
+            let savedArticle = await this.newsService.handleDislikeArticle(req.query.articleId, req.user);
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.dislikeSuccess, data: savedArticle });

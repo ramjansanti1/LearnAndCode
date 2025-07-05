@@ -38,12 +38,18 @@ const newsSchema = new mongoose.Schema(
                 ref: "User"
             }
         ],
-        likes: {
-            type: Number
-        },
-        dislikes: {
-            type: Number
-        }
+        likes: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: "User"
+            }
+        ],
+        dislikes: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: "User"
+            }
+        ]
     },
     {
         timestamps: true,

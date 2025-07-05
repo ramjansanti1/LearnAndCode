@@ -2,21 +2,44 @@ import axios from "axios";
 
 class News {
     private newsData: any;
+    private notificationData: any;
     private category: string = 'general';
+    private notificationVisibility: boolean = false;
+    private newsVisibility: boolean = true;
 
     async init() {
         try {
-            const response = await axios.get(`http://localhost:4040/news`, {
+            this.toggleNotificationVisibility();
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/news`, {
                 withCredentials: true
             });
             this.newsData = response.data.data;
-            this.initiateCards();
+            this.initiateNewsCards();
         } catch (err) {
             console.error("Failed to fetch news:", err);
         }
     }
 
-    async initiateCards() {
+    toggleNotificationVisibility() {
+        const div = document.getElementById("notificationContainer");
+        if (div) div.style.display = this.notificationVisibility ? "block" : "none";
+    }
+
+    toggleNewsVisibility() {
+        const div = document.getElementById("newsContainer");
+        if (div) {
+            div.classList.toggle("hidden", !this.newsVisibility);
+        }
+    }
+
+    setContent(newsVisibility: boolean, notificationVisibility: boolean) {
+        this.newsVisibility = newsVisibility;
+        this.notificationVisibility = notificationVisibility;
+        this.toggleNewsVisibility();
+        this.toggleNotificationVisibility();
+    }
+
+    async initiateNewsCards() {
         const newsContainer = document.getElementById("newsContainer");
         if (!newsContainer) return;
         newsContainer.innerHTML = "";
@@ -24,7 +47,7 @@ class News {
             this.newsData.forEach((item: any) => {
                 const card = document.createElement("div");
                 card.className = "news-card";
-                card.innerHTML = this.getCardHtml(item);
+                card.innerHTML = this.getNewsCardHtml(item);
                 newsContainer?.appendChild(card);
             });
         }
@@ -35,7 +58,7 @@ class News {
         }
     }
 
-    private getCardHtml(item: { [key: string]: any }) {
+    private getNewsCardHtml(item: { [key: string]: any }) {
         const content = item.content || "";
         const shortContent = content.length > 150
             ? content.slice(0, 150) + "..."
@@ -53,11 +76,11 @@ class News {
                 <button onclick="likeArticle('${item._id}')" class="btn like-btn" title="Like">
                     <i class="fa-regular fa-thumbs-up"></i>
                 </button>
-                <span>${item.likes}</span>
+                <span>${item.likes.length}</span>
                 <button onclick="dislikeArticle('${item._id}')" class="btn dislike-btn" title="Dislike">
                     <i class="fa-regular fa-thumbs-down"></i>
                 </button>
-                <span>${item.dislikes}</span>
+                <span>${item.dislikes.length}</span>
                 <button onclick="saveArticle('${item._id}')" class="btn save-btn" title="Save"><i class="fa-regular fa-bookmark"></i></button>
                 <button class="btn report-btn" title="Report"><i class="fa-regular fa-flag"></i></button>
                 </div>
@@ -66,16 +89,17 @@ class News {
 
     async getNewsBasedOnCategory(category: string) {
         try {
+            this.setContent(true, false);
             this.category = category;
             if (category === 'general') {
                 this.init();
             }
             else {
-                const response = await axios.get(`http://localhost:4040/news?category=${category}`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/news?category=${category}`, {
                     withCredentials: true
                 });
                 this.newsData = response.data.data;
-                this.initiateCards();
+                this.initiateNewsCards();
             }
         } catch (err) {
             console.error("Failed to fetch news:", err);
@@ -88,24 +112,85 @@ class News {
     }
 
     async likeArticle(artcleId: string) {
-        await axios.patch(`http://localhost:4040/news/like?articleId=${artcleId}`, {}, {
+        await axios.patch(`${import.meta.env.VITE_BASE_URL}/news/like?articleId=${artcleId}`, {}, {
             withCredentials: true
         });
         this.getNewsBasedOnCategory(this.category);
     }
 
     async dislikeArticle(articleId: string) {
-        await axios.patch(`http://localhost:4040/news/dislike?articleId=${articleId}`, {}, {
+        await axios.patch(`${import.meta.env.VITE_BASE_URL}/news/dislike?articleId=${articleId}`, {}, {
             withCredentials: true
         });
         this.getNewsBasedOnCategory(this.category);
     }
 
     async saveArticle(articleId: string) {
-        await axios.post(`http://localhost:4040/news/save?articleId=${articleId}`, {}, {
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/news/save?articleId=${articleId}`, {}, {
             withCredentials: true
         });
         this.getNewsBasedOnCategory(this.category);
+    }
+
+    async reportArticle(articleId: string) {
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/news/report?articleId=${articleId}`, {}, {
+            withCredentials: true
+        });
+        this.getNewsBasedOnCategory(this.category);
+    }
+
+    async getSavedNews() {
+        this.setContent(true, false);
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/news/save`, {
+            withCredentials: true
+        });
+        this.newsData = response.data.data;
+        this.initiateNewsCards();
+    }
+
+    async getNotifications() {
+        this.setContent(false, true);
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/notification`, {
+            withCredentials: true
+        });
+        this.notificationData = response.data.data;
+        this.initiateNotificationCards();
+    }
+
+    private initiateNotificationCards() {
+        const notificationContainer = document.getElementById("notificationContainer");
+        if (!notificationContainer) return;
+        notificationContainer.innerHTML = "";
+        if (this.notificationData.length) {
+            this.notificationData.forEach((item: any) => {
+                const card = document.createElement("div");
+                card.className = "notification-card";
+                card.innerHTML = this.getNotificationCardHtml(item);
+                notificationContainer?.appendChild(card);
+            });
+        }
+        else {
+            const message = document.createElement("h1");
+            message.innerHTML = `<h1>No Notification</h1>`;
+            notificationContainer.appendChild(message);
+        }
+    }
+
+    private getNotificationCardHtml(item: { [key: string]: any }) {
+        const content = item.content || "";
+        const shortContent = content.length > 150
+            ? content.slice(0, 150) + "..."
+            : content;
+        return `<div class="notification-header">
+                    <span class="timestamp">2025-07-04 11:39</span>
+                </div>
+                <div class="notification-body">
+                    <p><strong>Title:</strong>${item.title}</p>
+                    <a href=${item.url}
+                        target="_blank">
+                        View Article ↗
+                    </a>
+                </div>`
     }
 }
 
@@ -130,4 +215,12 @@ newsInstance.init();
 
 (window as any).saveArticle = (artcleId: string) => {
     newsInstance.saveArticle(artcleId);
+};
+
+(window as any).getSavedNews = () => {
+    newsInstance.getSavedNews();
+};
+
+(window as any).getNotifications = () => {
+    newsInstance.getNotifications();
 };

@@ -8,6 +8,9 @@ const savedArticleSchema = new mongoose.Schema(
             required: true,
             unique: true
         },
+        articleId: {
+            type: String
+        },
         userId: {
             type: String
         }

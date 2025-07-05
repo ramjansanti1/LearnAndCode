@@ -49,7 +49,8 @@ export default class NewsService {
             throw new Error(MessageConstants.article.saveNotFound);
         }
         for (const article of savedArticles) {
-            const fetchedArticle = await News.findById(article.savedArticleId);
+            const fetchedArticle = await News.findById(article.articleId);
+            console.log(fetchedArticle);
             articles.push(fetchedArticle);
         }
         return articles;
@@ -58,6 +59,7 @@ export default class NewsService {
     async handleSaveNewsArticle(articleId: string, user: customObject) {
         const savedArticle = await SavedArticle.create({
             savedArticleId: `${articleId}-${user._id}`,
+            articleId,
             userId: user._id
         });
         if (!savedArticle) {
@@ -77,16 +79,20 @@ export default class NewsService {
         return deletedArticle;
     }
 
-    async handlelikeArticle(articleId: string) {
+    async handlelikeArticle(articleId: string, user: customObject) {
         const articleFromDb = await this.getArticle(articleId);
-        articleFromDb.likes = (articleFromDb.likes as number || 0) + 1;
+        if (!articleFromDb.likes.includes(user._id) && !articleFromDb.dislikes.includes(user._id)) {
+            articleFromDb.likes.push(user._id);
+        }
         await articleFromDb?.save({ validateBeforeSave: false });
         return articleFromDb;
     }
 
-    async handleDislikeArticle(articleId: string) {
+    async handleDislikeArticle(articleId: string, user: customObject) {
         const articleFromDb = await this.getArticle(articleId);
-        articleFromDb.dislikes = (articleFromDb.dislikes as number || 0) + 1;
+        if (!articleFromDb.dislikes.includes(user._id) && !articleFromDb.likes.includes(user._id)) {
+            articleFromDb.dislikes.push(user._id);
+        }
         await articleFromDb?.save({ validateBeforeSave: false });
         return articleFromDb;
     }

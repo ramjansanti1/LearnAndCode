@@ -161,3 +161,56 @@ body {
 .category-list li a:hover {
     color: #1e3a8a;
 }
+
+.notification-card {
+    border: 1px solid #ddd;
+    border-left: 4px solid #1e3a8a;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    font-family: Arial, sans-serif;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.badge {
+    font-size: 0.85rem;
+    background-color: #1e3a8a;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.notification-body p {
+    margin: 1rem 0;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.notification-body a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.notification-body a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none !important;
+}

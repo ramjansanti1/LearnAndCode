@@ -18,8 +18,8 @@ export default class NewsApiService implements ExternalNewsService {
                 source: article.source.name,
                 url: article.url,
                 imageUrl: article.urlToImage,
-                likes: 0,
-                dislikes: 0
+                likes: [],
+                dislikes: []
             });
         });
         return processedArticles;

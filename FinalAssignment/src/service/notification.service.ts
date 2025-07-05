@@ -25,7 +25,8 @@ export default class NotificationService {
                 await Notification.create({
                     userId: user._id,
                     notificationArticleId: `${user._id}-${article._id.toString()}`,
-                    url: article.url
+                    url: article.url,
+                    title: article.title
                 });
             }
         }
