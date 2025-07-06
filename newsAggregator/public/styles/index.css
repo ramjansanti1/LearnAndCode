@@ -1,60 +1,60 @@
-/* Reset */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-  }
-  
-  body {
+}
+
+body {
     background: linear-gradient(135deg, #4a90e2, #007aff);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .login-container {
+}
+
+.login-container,
+.signup-container {
     background-color: #fff;
     padding: 2.5rem 2rem;
     border-radius: 12px;
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
     width: 100%;
     max-width: 400px;
-  }
-  
-  .login-form h2 {
+}
+
+.login-form h2 {
     text-align: center;
     margin-bottom: 1.5rem;
     color: #333;
-  }
-  
-  .input-group {
+}
+
+.input-group {
     margin-bottom: 1.2rem;
-  }
-  
-  .input-group label {
+}
+
+.input-group label {
     display: block;
     margin-bottom: 0.4rem;
     font-weight: 600;
     color: #555;
-  }
-  
-  .input-group input {
+}
+
+.input-group input {
     width: 100%;
     padding: 0.7rem;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
     transition: border 0.3s;
-  }
-  
-  .input-group input:focus {
+}
+
+.input-group input:focus {
     border-color: #007aff;
     outline: none;
-  }
-  
-  button {
+}
+
+button {
     width: 100%;
     padding: 0.8rem;
     background-color: #007aff;
@@ -65,21 +65,20 @@
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #005fcc;
-  }
-  
-  .footer-text {
+}
+
+.footer-text {
     text-align: center;
     margin-top: 1rem;
     font-size: 0.9rem;
     color: #666;
-  }
-  
-  .footer-text a {
+}
+
+.footer-text a {
     color: #007aff;
     text-decoration: none;
-  }
-  
+}
