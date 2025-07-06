@@ -18,15 +18,15 @@ class NewsController {
 
     private async getNewsBasedOnPrefrence(req: any) {
         let fetchedNews;
-        const { category, searchQuery } = req.query;
+        const { category, searchQuery, page } = req.query;
         if (category) {
-            fetchedNews = await this.newsService.handleGetNewsBycategory(category);
+            fetchedNews = await this.newsService.handleGetNewsBycategory(category, page);
         }
         else if (searchQuery) {
-            fetchedNews = await this.newsService.handleGetNewsBySearchQuery(searchQuery);
+            fetchedNews = await this.newsService.handleGetNewsBySearchQuery(searchQuery, page);
         }
         else {
-            fetchedNews = await this.newsService.handleGetNews();
+            fetchedNews = await this.newsService.handleGetNews(page);
         }
         return fetchedNews;
     }

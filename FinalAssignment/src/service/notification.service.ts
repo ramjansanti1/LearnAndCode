@@ -18,8 +18,14 @@ export default class NotificationService {
             const notificationConfig = await NotificationConfig.findOne({ userId: user._id });
             if (!notificationConfig) return;
             for (const category of notificationConfig.categoryPreference) {
-                const fetchedNews = await News.find({ category, blocked: false }).limit(2);
-                news.push(...fetchedNews);
+                const notifiedIds = await Notification.find({ userId: user._id }, 'notificationArticleId')
+                    .then(docs => new Set(docs.map(doc => doc.notificationArticleId.split('-')[1])));
+                const newArticles = await News.find({
+                    category,
+                    blocked: false,
+                    _id: { $nin: Array.from(notifiedIds) }
+                }).sort({ createdAt: -1 }).limit(2);
+                news.push(...newArticles);
             }
             for (const article of news) {
                 await Notification.create({
@@ -36,7 +42,7 @@ export default class NotificationService {
     }
 
     async handleGetNotification(user: customObject) {
-        const notifications = await Notification.find({ userId: user._id });
+        const notifications = await Notification.find({ userId: user._id }).sort({ createdAt: -1 });;
         if (!notifications) {
             throw new Error(MessageConstants.notification.fetchError);
         }

@@ -15,15 +15,19 @@
             <div class="logo">📰 NewsApp</div>
             <ul class="nav-links">
                 <li><a onclick="getNewsBasedOnCategory('general')">Home</a></li>
-                <li onclick="toggleCategoryMenu()" style="cursor: pointer;">
-                    Categories
-                </li>
+                <li onclick="toggleCategoryMenu()" style="cursor: pointer;">Categories</li>
                 <li><a onclick="getSavedNews()">Saved Articles</a></li>
                 <li><a onclick="getNotifications()">Notifications</a></li>
-                <li><a onclick="getNewsBasedOnCategory('general')">Notification Configure</a></li>
-                <li><a onclick="getNewsBasedOnCategory('general')">Logout</a></li>
+                <li><a onclick="getNotificationsConfig('general')">Notification Configure</a></li>
+                <li><a onclick="logoutUser()">Logout</a></li>
             </ul>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search articles..."
+                    onkeydown="if(event.key==='Enter') getNewsByQuery()" />
+                <button onclick="getNewsByQuery()"><i class="fa fa-search"></i></button>
+            </div>
         </nav>
+
         <ul id="categoryList" class="category-list" style="display: none;">
             <li><a onclick="getNewsBasedOnCategory('sports')">Sports</a></li>
             <li><a onclick="getNewsBasedOnCategory('business')">Business</a></li>
@@ -36,21 +40,9 @@
     </header>
 
     <main class="news-container" id="newsContainer"></main>
-    <div id="notificationContainer">
-        <div class="notification-card">
-            <div class="notification-header">
-                <span class="timestamp">2025-07-04 11:39</span>
-            </div>
-            <div class="notification-body">
-                <p><strong>Article ID:</strong> 685470c41e80f3fc8d309ab5-68622baad238ad2159184109</p>
-                <p><strong>User ID:</strong> 685470c41e80f3fc8d309ab5</p>
-                <a href="https://www.nintendolife.com/news/2025/06/here-are-the-square-enix-switch-games-you-can-play-on-switch-2-right-now1"
-                    target="_blank">
-                    View Article ↗
-                </a>
-            </div>
-        </div>
-    </div>
+    <div id="notificationContainer"></div>
+    <!-- <div class="config-container" id="configContainer"></div> -->
+    <div class="pagination-container" id="paginationContainer"></div>
 </body>
 <script type="module" src="../../src/controllers/user.homepage.ts"></script>
 

@@ -6,15 +6,19 @@ class News {
     private category: string = 'general';
     private notificationVisibility: boolean = false;
     private newsVisibility: boolean = true;
+    private totalPages = 1;
+    private currentPage = 1;
 
     async init() {
         try {
             this.toggleNotificationVisibility();
-            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/news`, {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/news?page=${this.currentPage}`, {
                 withCredentials: true
             });
-            this.newsData = response.data.data;
+            this.newsData = response.data.data.news;
+            this.totalPages = response.data.data.totalPages;
             this.initiateNewsCards();
+            this.renderPagination();
         } catch (err) {
             console.error("Failed to fetch news:", err);
         }
@@ -95,11 +99,13 @@ class News {
                 this.init();
             }
             else {
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/news?category=${category}`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/news?category=${category}&page=${this.currentPage}`, {
                     withCredentials: true
                 });
-                this.newsData = response.data.data;
+                this.newsData = response.data.data.news;
+                this.totalPages = response.data.data.totalPages;
                 this.initiateNewsCards();
+                this.renderPagination();
             }
         } catch (err) {
             console.error("Failed to fetch news:", err);
@@ -192,6 +198,45 @@ class News {
                     </a>
                 </div>`
     }
+
+    private renderPagination() {
+        const container = document.getElementById("paginationContainer");
+        if (!container || this.totalPages <= 1) {
+            if (container) container.innerHTML = "";
+            return;
+        }
+        container.innerHTML = "";
+        for (let i = 1; i <= this.totalPages; i++) {
+            const button = document.createElement("button");
+            button.className = "pagination-button" + (i === this.currentPage ? " active" : "");
+            button.innerText = `${i}`;
+            button.onclick = async () => {
+                this.currentPage = i;
+                await this.getNewsBasedOnCategory(this.category);
+            };
+            container.appendChild(button);
+        }
+    }
+
+    async getNewsByQuery() {
+        const query = (document.getElementById("searchInput") as HTMLInputElement).value.trim();
+        if (!query) return;
+        try {
+            const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/news?searchQuery=${encodeURIComponent(query)}&page=${this.currentPage}`, {
+                withCredentials: true,
+            });
+            this.setContent(true, false);
+            this.newsData = data.data.news;
+            this.initiateNewsCards();
+        } catch (err) {
+            console.error("Search failed:", err);
+        }
+    }
+
+    logoutUser() {
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = "/views/index.html";
+    }
 }
 
 const newsInstance = new News();
@@ -223,4 +268,12 @@ newsInstance.init();
 
 (window as any).getNotifications = () => {
     newsInstance.getNotifications();
+};
+
+(window as any).getNewsByQuery = async () => {
+    newsInstance.getNewsByQuery();
+};
+
+(window as any).logoutUser = () => {
+    newsInstance.logoutUser();
 };

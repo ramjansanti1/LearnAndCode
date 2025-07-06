@@ -4,25 +4,40 @@ import SavedArticle from "../../models/savedArticle.model.js";
 import { customObject } from "../../types/types.js";
 
 export default class NewsService {
-    async handleGetNews() {
-        const news = await News.find({ blocked: false }).limit(20);
-        return news;
+    async handleGetNews(page: string) {
+        const pageNumber = parseInt(page) || 1;
+        const skip = (pageNumber - 1) * 20;
+        const news = await News.find({ blocked: false })
+            .skip(skip)
+            .limit(20)
+            .sort({ createdAt: -1 });
+        const total = await News.countDocuments({ blocked: false });
+        const totalPages = Math.ceil(total / 20);
+        return {news, totalPages};
     }
 
-    async handleGetNewsBycategory(category: string) {
-        const news = await News.find({ category, blocked: false }).sort({ likes: -1 }).limit(20);
-        return news;
+    async handleGetNewsBycategory(category: string, page: string) {
+        const pageNumber = parseInt(page) || 1;
+        const skip = (pageNumber - 1) * 20;
+        const news = await News.find({ category, blocked: false }).sort({ likes: -1 }).limit(20).skip(skip);
+        const total = await News.countDocuments({ blocked: false });
+        const totalPages = Math.ceil(total / 20);
+        return {news, totalPages};
     }
 
-    async handleGetNewsBySearchQuery(searchQuery: string) {
+    async handleGetNewsBySearchQuery(searchQuery: string, page: string) {
+        const pageNumber = parseInt(page) || 1;
+        const skip = (pageNumber - 1) * 20;
         const news = await News.find({
             $or: [
                 { title: { $regex: searchQuery, $options: 'i' } },
                 { content: { $regex: searchQuery, $options: 'i' } },
                 { description: { $regex: searchQuery, $options: 'i' } }
             ]
-        }).sort({ likes: -1 }).limit(20);
-        return news;
+        }).sort({ likes: -1 }).limit(20).skip(skip);
+        const total = await News.countDocuments({ blocked: false });
+        const totalPages = Math.ceil(total / 20);
+        return {news, totalPages};
     }
 
     async handleGetNewsByDate(dateData: customObject) {
