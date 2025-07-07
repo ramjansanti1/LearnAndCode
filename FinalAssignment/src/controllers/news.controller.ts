@@ -1,11 +1,14 @@
 import NewsService from "../service/newsServices/news.service.js";
 import { MessageConstants } from "../constants/message.constants.js";
+import { Logger } from "../utils/logger.util.js";
 
 class NewsController {
     newsService: NewsService;
+    logger: Logger;
 
     constructor() {
         this.newsService = new NewsService();
+        this.logger = new Logger();
         this.getNews = this.getNews.bind(this);
         this.getNewsByDate = this.getNewsByDate.bind(this);
         this.getSavedNewsArticle = this.getSavedNewsArticle.bind(this);
@@ -38,6 +41,7 @@ class NewsController {
                 .status(200)
                 .json({ message: MessageConstants.news.fetchSuccess, data: fetchedNews });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.news.fetchError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.news.fetchError, data: error });
@@ -51,6 +55,7 @@ class NewsController {
                 .status(200)
                 .json({ message: MessageConstants.news.fetchSuccess, data: fetchedNews });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.news.fetchError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.news.fetchError, data: error });
@@ -59,11 +64,12 @@ class NewsController {
 
     async getSavedNewsArticle(req: any, res: any) {
         try {
-            let savedArticles = await this.newsService.handleGetSavedNewsArticle(req.user);
+            let savedArticles = await this.newsService.handleGetSavedNewsArticle(req.user, req.query.page);
             return res
                 .status(200)
                 .json({ message: MessageConstants.article.fetchSuccess, data: savedArticles });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.article.fetchError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.article.fetchError, data: error });
@@ -77,6 +83,7 @@ class NewsController {
                 .status(200)
                 .json({ message: MessageConstants.article.saveSuccess, data: savedArticle });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.article.saveError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.article.saveError, data: error });
@@ -90,6 +97,7 @@ class NewsController {
                 .status(200)
                 .json({ message: MessageConstants.article.deleteSuccess, data: savedArticle });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.article.deleteError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.article.deleteError, data: error });
@@ -103,6 +111,7 @@ class NewsController {
                 .status(200)
                 .json({ message: MessageConstants.article.likeSuccess, data: savedArticle });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.article.likeError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.article.likeError, data: error });
@@ -116,6 +125,7 @@ class NewsController {
                 .status(200)
                 .json({ message: MessageConstants.article.dislikeSuccess, data: savedArticle });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.article.dislikeError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.article.dislikeError, data: error });
@@ -129,6 +139,7 @@ class NewsController {
                 .status(200)
                 .json({ message: MessageConstants.article.reportSuccess, data: reportedArticle });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.article.reportError)
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.article.reportError, data: error });

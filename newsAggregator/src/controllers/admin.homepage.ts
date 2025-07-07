@@ -1,5 +1,5 @@
 import axios from "axios";
-import AdminHelper from "./admin.helper";
+import HtmlHelper from "./html.helper";
 
 type ApiKeyData = {
     _id: string;
@@ -29,7 +29,7 @@ type AdminUser = {
 
 class Admin {
     private apiKeyData: ApiKeyData[] = [];
-    private adminHelper: AdminHelper = new AdminHelper();
+    private htmlHelper: HtmlHelper = new HtmlHelper();
 
     async init() {
         try {
@@ -68,7 +68,7 @@ class Admin {
         const table = document.createElement("table");
         table.style.borderCollapse = "collapse";
         table.style.width = "100%";
-        table.appendChild(this.adminHelper.createTableHeader(["Server Name", "API Key", "Status", "Created At", "Updated At", "Action"]));
+        table.appendChild(this.htmlHelper.createTableHeader(["Server Name", "API Key", "Status", "Created At", "Updated At", "Action"]));
         const tbody = document.createElement("tbody");
         this.apiKeyData.forEach((item, index) => tbody.appendChild(this.createTableRow(item, index)));
         tbody.appendChild(this.addNewServerRow());
@@ -83,25 +83,25 @@ class Admin {
         apiKeyInput.type = "text";
         apiKeyInput.value = item.apiKey;
         apiKeyInput.oninput = (e) => this.apiKeyData[index].apiKey = (e.target as HTMLInputElement).value;
-        const statusSelect = this.adminHelper.createStatusDropdown(["active", "inactive"], "externalSource", item.status);
+        const statusSelect = this.htmlHelper.createStatusDropdown(["active", "inactive"], "externalSource", item.status);
         statusSelect.id = `externalSourceStatus${index}`;
         statusSelect.onchange = (e) => this.apiKeyData[index].status = (e.target as HTMLSelectElement).value;
-        const updateBtn = this.adminHelper.createButton("Update", async () => {
+        const updateBtn = this.htmlHelper.createButton("Update", async () => {
             await this.updateExternalSource(this.apiKeyData[index], index);
         });
         row.innerHTML = `
             <td>${item.serverName}</td>
             <td></td>
             <td></td>
-            <td>${this.adminHelper.formatDate(item.createdAt)}</td>
-            <td>${this.adminHelper.formatDate(item.updatedAt)}</td>
+            <td>${this.htmlHelper.formatDate(item.createdAt)}</td>
+            <td>${this.htmlHelper.formatDate(item.updatedAt)}</td>
             <td></td>
         `;
         const cells = row.querySelectorAll("td");
         cells[1].appendChild(apiKeyInput);
         cells[2].appendChild(statusSelect);
         cells[5].appendChild(updateBtn);
-        this.adminHelper.applyTableStyles(row);
+        this.htmlHelper.applyTableStyles(row);
         return row;
     }
 
@@ -124,10 +124,10 @@ class Admin {
 
     private addNewServerRow(): HTMLTableRowElement {
         const row = document.createElement("tr");
-        const nameInput = this.adminHelper.createInput("Server Name");
-        const apiKeyInput = this.adminHelper.createInput("API Key");
-        const statusSelect = this.adminHelper.createStatusDropdown(["active", "inactive"], "ExternalSource");
-        const addBtn = this.adminHelper.createButton("Add Server", async () => {
+        const nameInput = this.htmlHelper.createInput("Server Name");
+        const apiKeyInput = this.htmlHelper.createInput("API Key");
+        const statusSelect = this.htmlHelper.createStatusDropdown(["active", "inactive"], "ExternalSource");
+        const addBtn = this.htmlHelper.createButton("Add Server", async () => {
             const name = nameInput.value.trim();
             const key = apiKeyInput.value.trim();
             const status = statusSelect.value;
@@ -153,7 +153,7 @@ class Admin {
         cells[1].appendChild(apiKeyInput);
         cells[2].appendChild(statusSelect);
         cells[5].appendChild(addBtn);
-        this.adminHelper.applyTableStyles(row);
+        this.htmlHelper.applyTableStyles(row);
         return row;
     }
 
@@ -193,12 +193,12 @@ class Admin {
         const table = document.createElement("table");
         table.style.borderCollapse = "collapse";
         table.style.width = "100%";
-        table.appendChild(this.adminHelper.createTableHeader(["Category", "Status", "Created At", "Updated At", "Action"]));
+        table.appendChild(this.htmlHelper.createTableHeader(["Category", "Status", "Created At", "Updated At", "Action"]));
         const tbody = document.createElement("tbody");
         data.forEach((item) => {
             const row = document.createElement("tr");
-            const statusSelect = this.adminHelper.createStatusDropdown(["true", "false"], "category", item.status.toString());
-            const updateBtn = this.adminHelper.createButton("Update", async () => {
+            const statusSelect = this.htmlHelper.createStatusDropdown(["true", "false"], "category", item.status.toString());
+            const updateBtn = this.htmlHelper.createButton("Update", async () => {
                 try {
                     await axios.patch(`${import.meta.env.VITE_BASE_URL}/admin/categories`, {
                         category: item.category,
@@ -221,13 +221,13 @@ class Admin {
             const cells = row.querySelectorAll("td");
             cells[1].appendChild(statusSelect);
             cells[4].appendChild(updateBtn);
-            this.adminHelper.applyTableStyles(row);
+            this.htmlHelper.applyTableStyles(row);
             tbody.appendChild(row);
         });
         const addRow = document.createElement("tr");
-        const nameInput = this.adminHelper.createInput("Category Name");
-        const statusSelect = this.adminHelper.createStatusDropdown(["true", "false"], "category");
-        const addBtn = this.adminHelper.createButton("Add Category", async () => {
+        const nameInput = this.htmlHelper.createInput("Category Name");
+        const statusSelect = this.htmlHelper.createStatusDropdown(["true", "false"], "category");
+        const addBtn = this.htmlHelper.createButton("Add Category", async () => {
             const categoryName = nameInput.value.trim();
             const status = statusSelect.value === "true";
             if (!categoryName) {
@@ -251,7 +251,7 @@ class Admin {
         addCells[0].appendChild(nameInput);
         addCells[1].appendChild(statusSelect);
         addCells[4].appendChild(addBtn);
-        this.adminHelper.applyTableStyles(addRow);
+        this.htmlHelper.applyTableStyles(addRow);
         tbody.appendChild(addRow);
         table.appendChild(tbody);
         return table;
@@ -297,7 +297,7 @@ class Admin {
             data.data.forEach((item: any) => {
                 const row = document.createElement("tr");
 
-                const removeBtn = this.adminHelper.createButton("Remove", async () => {
+                const removeBtn = this.htmlHelper.createButton("Remove", async () => {
                     try {
                         await axios.delete(`${import.meta.env.VITE_BASE_URL}/admin/keywords`, {
                             data: { keyword: item.keyword },
@@ -318,12 +318,12 @@ class Admin {
 
                 const cells = row.querySelectorAll("td");
                 cells[2].appendChild(removeBtn);
-                this.adminHelper.applyTableStyles(row);
+                this.htmlHelper.applyTableStyles(row);
                 tbody.appendChild(row);
             });
             const addRow = document.createElement("tr");
-            const input = this.adminHelper.createInput("Enter keyword");
-            const addBtn = this.adminHelper.createButton("Add", async () => {
+            const input = this.htmlHelper.createInput("Enter keyword");
+            const addBtn = this.htmlHelper.createButton("Add", async () => {
                 const keyword = input.value.trim();
                 if (!keyword) return alert("Keyword is required");
                 try {
@@ -341,7 +341,7 @@ class Admin {
             const addCells = addRow.querySelectorAll("td");
             addCells[0].appendChild(input);
             addCells[2].appendChild(addBtn);
-            this.adminHelper.applyTableStyles(addRow);
+            this.htmlHelper.applyTableStyles(addRow);
             tbody.appendChild(addRow);
 
             table.appendChild(tbody);
@@ -383,7 +383,7 @@ class Admin {
         table.style.borderCollapse = "collapse";
         table.style.width = "100%";
         table.appendChild(
-            this.adminHelper.createTableHeader([
+            this.htmlHelper.createTableHeader([
                 "Title",
                 "Source",
                 "Reports",
@@ -396,9 +396,9 @@ class Admin {
         const tbody = document.createElement("tbody");
         data.forEach((item, index) => {
             const row = document.createElement("tr");
-            const blockStatusSelect = this.adminHelper.createStatusDropdown(["true", "false"], "reports", item.blocked.toString());
+            const blockStatusSelect = this.htmlHelper.createStatusDropdown(["true", "false"], "reports", item.blocked.toString());
             blockStatusSelect.id = `blockStatusSelect${index}`;
-            const updateBtn = this.adminHelper.createButton("Update", async () => {
+            const updateBtn = this.htmlHelper.createButton("Update", async () => {
                 const selectedStatus = (document.getElementById(`blockStatusSelect${index}`) as HTMLSelectElement).value === "true";
                 try {
                     await axios.patch(`${import.meta.env.VITE_BASE_URL}/admin/reports`, {
@@ -430,7 +430,7 @@ class Admin {
             cells[4].appendChild(linkAnchor);
             cells[5].appendChild(blockStatusSelect);
             cells[6].appendChild(updateBtn);
-            this.adminHelper.applyTableStyles(row);
+            this.htmlHelper.applyTableStyles(row);
             tbody.appendChild(row);
         });
         table.appendChild(tbody);
@@ -465,12 +465,12 @@ class Admin {
         table.style.borderCollapse = "collapse";
         table.style.width = "100%";
         table.appendChild(
-            this.adminHelper.createTableHeader(["Name", "Email", "Role", "Created At", "Updated At", "Action"])
+            this.htmlHelper.createTableHeader(["Name", "Email", "Role", "Created At", "Updated At", "Action"])
         );
         const tbody = document.createElement("tbody");
         data.forEach(admin => {
             const row = document.createElement("tr");
-            const revokeBtn = this.adminHelper.createButton("Revoke Access", async () => {
+            const revokeBtn = this.htmlHelper.createButton("Revoke Access", async () => {
                 try {
                     await axios.patch(`${import.meta.env.VITE_BASE_URL}/admin/revokeadminaccess`, {
                         email: admin.email
@@ -492,12 +492,12 @@ class Admin {
             `;
             const cells = row.querySelectorAll("td");
             cells[5].appendChild(revokeBtn);
-            this.adminHelper.applyTableStyles(row);
+            this.htmlHelper.applyTableStyles(row);
             tbody.appendChild(row);
         });
         const addRow = document.createElement("tr");
-        const emailInput = this.adminHelper.createInput("Email");
-        const addBtn = this.adminHelper.createButton("Add Admin", async () => {
+        const emailInput = this.htmlHelper.createInput("Email");
+        const addBtn = this.htmlHelper.createButton("Add Admin", async () => {
             const email = emailInput.value.trim();
             if (!email) {
                 alert("Email required.");
@@ -518,7 +518,7 @@ class Admin {
         const addCells = addRow.querySelectorAll("td");
         addCells[1].appendChild(emailInput);
         addCells[5].appendChild(addBtn);
-        this.adminHelper.applyTableStyles(addRow);
+        this.htmlHelper.applyTableStyles(addRow);
         tbody.appendChild(addRow);
         table.appendChild(tbody);
         return table;

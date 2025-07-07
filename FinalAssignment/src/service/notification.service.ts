@@ -30,6 +30,7 @@ export default class NotificationService {
             for (const article of news) {
                 await Notification.create({
                     userId: user._id,
+                    articleId: article._id.toString(),
                     notificationArticleId: `${user._id}-${article._id.toString()}`,
                     url: article.url,
                     title: article.title

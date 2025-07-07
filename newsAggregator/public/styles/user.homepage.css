@@ -291,3 +291,32 @@ input {
 .search-container button:hover {
     background-color: #163b7c;
 }
+
+button.update-btn {
+    padding: 6px 12px;
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-left: 5em;
+}
+
+button.update-btn:hover {
+    background-color: #1e3a8a;
+}
+
+button.update-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.categoryTable {
+    margin-top: 2em;
+}
+
+.keywordTable {
+    margin-top: 2em;
+}

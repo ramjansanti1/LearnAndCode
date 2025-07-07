@@ -60,20 +60,24 @@ export default class NewsService {
         return news;
     }
 
-    async handleGetSavedNewsArticle(user: customObject) {
+    async handleGetSavedNewsArticle(user: customObject, page: string) {
+        const pageNumber = parseInt(page) || 1;
+        const skip = (pageNumber - 1) * 20;
         let articles: customObject = [];
-        const savedArticles = await SavedArticle.find({
-            userId: user._id
-        });
+        const savedArticles = await SavedArticle.find({ userId: user._id })
+            .skip(skip)
+            .limit(20)
+            .sort({ createdAt: -1 });
         if (!savedArticles) {
             throw new Error(MessageConstants.article.saveNotFound);
         }
         for (const article of savedArticles) {
             const fetchedArticle = await News.findById(article.articleId);
-            console.log(fetchedArticle);
             articles.push(fetchedArticle);
         }
-        return articles;
+        const total = await SavedArticle.countDocuments({ blocked: false });
+        const totalPages = Math.ceil(total / 20);
+        return { articles, totalPages };
     }
 
     async handleSaveNewsArticle(articleId: string, user: customObject) {

@@ -29,7 +29,6 @@ export class Logger {
 
     info(message: string) {
         const log = this.formatMessage('info', message);
-        console.log(log);
         this.writeToFile(log);
     }
 

@@ -1,11 +1,14 @@
 import NotificationService from "../service/notification.service.js";
 import { MessageConstants } from "../constants/message.constants.js";
+import { Logger } from "../utils/logger.util.js";
 
 export default class NotificationController {
     notificationService: NotificationService;
+    logger: Logger;
 
     constructor() {
         this.notificationService = new NotificationService();
+        this.logger = new Logger();
         this.getNotifications = this.getNotifications.bind(this);
         this.getNotificationConfig = this.getNotificationConfig.bind(this);
         this.addNotificationConfig = this.addNotificationConfig.bind(this);
@@ -22,6 +25,7 @@ export default class NotificationController {
                 .status(200)
                 .json({ message: MessageConstants.notification.fetchSuccess, data: fetchedNotificationConfig });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.notification.fetchError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.notification.fetchError, data: error });
@@ -35,6 +39,7 @@ export default class NotificationController {
                 .status(200)
                 .json({ message: MessageConstants.notification.fetchSuccess, data: fetchedNotificationConfig });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.notification.fetchError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.notification.fetchError, data: error });
@@ -48,6 +53,7 @@ export default class NotificationController {
                 .status(200)
                 .json({ message: MessageConstants.notification.addSuccess, data: addedNotificationConfig });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.notification.addError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.notification.addError, data: error });
@@ -61,6 +67,7 @@ export default class NotificationController {
                 .status(200)
                 .json({ message: MessageConstants.notification.categoryAddSuccess, data: addedCategory });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.notification.categoryAddError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.notification.categoryAddError, data: error });
@@ -74,6 +81,7 @@ export default class NotificationController {
                 .status(200)
                 .json({ message: MessageConstants.notification.categoryRemoveSuccess, data: removedCategory });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.notification.categoryRemoveError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.notification.categoryRemoveError, data: error });
@@ -87,6 +95,7 @@ export default class NotificationController {
                 .status(200)
                 .json({ message: MessageConstants.notification.keywordAddSuccess, data: addedKeyword });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.notification.keywordAddError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.notification.keywordAddError, data: error });
@@ -100,6 +109,7 @@ export default class NotificationController {
                 .status(200)
                 .json({ message: MessageConstants.notification.keywordRemoveSuccess, data: removedKeyword });
         } catch (error: any) {
+            this.logger.error(error.message || MessageConstants.notification.keywordRemoveError);
             return res
                 .status(500)
                 .json({ message: error.message || MessageConstants.notification.keywordRemoveError, data: error });

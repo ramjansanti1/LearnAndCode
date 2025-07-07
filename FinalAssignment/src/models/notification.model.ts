@@ -7,6 +7,10 @@ const notificationSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        articleId: {
+            type: String,
+            required: true
+        },
         notificationArticleId: {
             type: String,
             required: true,

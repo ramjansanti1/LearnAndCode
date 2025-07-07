@@ -33,7 +33,6 @@ export default class Nodemailer {
             if (!article) return console.log("Article not found");
             const mailOptions = this.getMailOptions(article.title as string, article.imageUrl as string, notification.url, user.email);
             const info = await this.transporter.sendMail(mailOptions);
-            console.log("Email sent:", info.response);
             if (notification) { notification.sentOverMail = true; }
             await notification.save({ validateBeforeSave: false });
         } catch (error) {

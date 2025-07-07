@@ -1,4 +1,4 @@
-export default class AdminHelper {
+export default class HtmlHelper {
     formatDate(isoString: string): string {
         const date = new Date(isoString);
         return date.toLocaleString(undefined, {
@@ -48,6 +48,7 @@ export default class AdminHelper {
         row.querySelectorAll("td, th").forEach(cell => {
             (cell as HTMLElement).style.border = "1px solid #ddd";
             (cell as HTMLElement).style.padding = "8px";
+            (cell as HTMLElement).style.marginTop = "2em";
         });
     }
 

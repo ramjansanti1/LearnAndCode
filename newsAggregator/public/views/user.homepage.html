@@ -18,7 +18,7 @@
                 <li onclick="toggleCategoryMenu()" style="cursor: pointer;">Categories</li>
                 <li><a onclick="getSavedNews()">Saved Articles</a></li>
                 <li><a onclick="getNotifications()">Notifications</a></li>
-                <li><a onclick="getNotificationsConfig('general')">Notification Configure</a></li>
+                <li><a onclick="getNotificationConfig()">Notification Configure</a></li>
                 <li><a onclick="logoutUser()">Logout</a></li>
             </ul>
             <div class="search-container">
@@ -40,8 +40,8 @@
     </header>
 
     <main class="news-container" id="newsContainer"></main>
-    <div id="notificationContainer"></div>
-    <!-- <div class="config-container" id="configContainer"></div> -->
+    <div class="notificationContainer" id="notificationContainer"></div>
+    <div class="configContainer" id="configContainer"></div>
     <div class="pagination-container" id="paginationContainer"></div>
 </body>
 <script type="module" src="../../src/controllers/user.homepage.ts"></script>
