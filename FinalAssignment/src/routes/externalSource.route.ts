@@ -36,21 +36,5 @@ export default class ExternalSourceRouter {
                 this.adminMiddleware.checkAdmin,
                 this.externalSourceController.updateApiKey
             );
-
-        this.router
-            .route(RouteConstants.externalSource.activate)
-            .patch(
-                this.authMiddleware.verifyJWT,
-                this.adminMiddleware.checkAdmin,
-                this.externalSourceController.activateSource
-            );
-
-        this.router
-            .route(RouteConstants.externalSource.deactivate)
-            .patch(
-                this.authMiddleware.verifyJWT,
-                this.adminMiddleware.checkAdmin,
-                this.externalSourceController.decativateSource
-            );
     }
 }

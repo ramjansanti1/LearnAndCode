@@ -86,7 +86,7 @@ class News {
                 </button>
                 <span>${item.dislikes.length}</span>
                 <button onclick="saveArticle('${item._id}')" class="btn save-btn" title="Save"><i class="fa-regular fa-bookmark"></i></button>
-                <button class="btn report-btn" title="Report"><i class="fa-regular fa-flag"></i></button>
+                <button onclick="reportArticle('${item._id}')" class="btn report-btn" title="Report"><i class="fa-regular fa-flag"></i></button>
                 </div>
             </div>`
     }
@@ -139,7 +139,7 @@ class News {
     }
 
     async reportArticle(articleId: string) {
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/news/report?articleId=${articleId}`, {}, {
+        await axios.patch(`${import.meta.env.VITE_BASE_URL}/news/report?articleId=${articleId}`, {}, {
             withCredentials: true
         });
         this.getNewsBasedOnCategory(this.category);
@@ -242,38 +242,13 @@ class News {
 const newsInstance = new News();
 newsInstance.init();
 
-(window as any).getNewsBasedOnCategory = (category: string) => {
-    newsInstance.getNewsBasedOnCategory(category);
-};
-
-(window as any).toggleCategoryMenu = () => {
-    newsInstance.toggleCategoryMenu();
-};
-
-(window as any).likeArticle = (artcleId: string) => {
-    newsInstance.likeArticle(artcleId);
-};
-
-(window as any).dislikeArticle = (artcleId: string) => {
-    newsInstance.dislikeArticle(artcleId);
-};
-
-(window as any).saveArticle = (artcleId: string) => {
-    newsInstance.saveArticle(artcleId);
-};
-
-(window as any).getSavedNews = () => {
-    newsInstance.getSavedNews();
-};
-
-(window as any).getNotifications = () => {
-    newsInstance.getNotifications();
-};
-
-(window as any).getNewsByQuery = async () => {
-    newsInstance.getNewsByQuery();
-};
-
-(window as any).logoutUser = () => {
-    newsInstance.logoutUser();
-};
+(window as any).getNewsBasedOnCategory = (category: string) => { newsInstance.getNewsBasedOnCategory(category); };
+(window as any).toggleCategoryMenu = () => { newsInstance.toggleCategoryMenu(); }
+(window as any).likeArticle = (artcleId: string) => { newsInstance.likeArticle(artcleId); };
+(window as any).dislikeArticle = (artcleId: string) => { newsInstance.dislikeArticle(artcleId); };
+(window as any).saveArticle = (artcleId: string) => { newsInstance.saveArticle(artcleId); };
+(window as any).getSavedNews = () => { newsInstance.getSavedNews(); };
+(window as any).getNotifications = () => { newsInstance.getNotifications(); };
+(window as any).getNewsByQuery = async () => { newsInstance.getNewsByQuery(); };
+(window as any).logoutUser = () => { newsInstance.logoutUser(); };
+(window as any).reportArticle = (artcleId: string) => { newsInstance.reportArticle(artcleId); };

@@ -67,7 +67,7 @@ export default class AdminService {
         if (!fetchedCategory) {
             throw new Error(MessageConstants.categories.updateError);
         }
-        if (fetchedCategory?.status) fetchedCategory.status = categoryData.status;
+        fetchedCategory.status = categoryData.status;
         await fetchedCategory?.save({ validateBeforeSave: false });
         return fetchedCategory;
     }

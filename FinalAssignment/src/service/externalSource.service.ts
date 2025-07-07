@@ -31,18 +31,7 @@ export default class ExternalSourceService {
         }
         if (fecthedExternalSources) {
             fecthedExternalSources.apiKey = apiData.apiKey;
-        }
-        await fecthedExternalSources?.save({ validateBeforeSave: false });
-        return fecthedExternalSources;
-    }
-
-    async handleUpdateStatus(serverData: customObject, status: 'active' | 'inactive') {
-        const fecthedExternalSources = await ExternalSource.findOne({ serverName: serverData.serverName });
-        if (!fecthedExternalSources) {
-            throw new Error(MessageConstants.externalSource.fetchError);
-        }
-        if (fecthedExternalSources) {
-            fecthedExternalSources.status = status;
+            fecthedExternalSources.status = apiData.status;
         }
         await fecthedExternalSources?.save({ validateBeforeSave: false });
         return fecthedExternalSources;
