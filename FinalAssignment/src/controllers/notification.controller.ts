@@ -2,7 +2,7 @@ import NotificationService from "../service/notification.service.js";
 import { MessageConstants } from "../constants/message.constants.js";
 import { Logger } from "../utils/logger.util.js";
 
-export default class NotificationController {
+class NotificationController {
     notificationService: NotificationService;
     logger: Logger;
 
@@ -116,3 +116,5 @@ export default class NotificationController {
         }
     }
 }
+
+export default new NotificationController()

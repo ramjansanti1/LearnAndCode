@@ -38,7 +38,7 @@ class UserController {
             let emailService = new EmailService();
             const loginResponse = await this.userService.handleLogin(req.body);
             await this.notificationService.startNotificationScheduler(loginResponse.userFromDatabase as customObject);
-            // emailService.startEmailScheduler(loginResponse.userFromDatabase as customObject);
+            emailService.startEmailScheduler(loginResponse.userFromDatabase as customObject);
             return res
                 .status(200)
                 .cookie("accessToken", loginResponse.accessToken)

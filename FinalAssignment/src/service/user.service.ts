@@ -1,6 +1,7 @@
 import { MessageConstants } from "../constants/message.constants.js";
 import User from "../models/user.model.js";
 import { customObject } from "../types/types.js";
+import NotificationConfig from "../models/notificationconfig.model.js";
 
 export default class UserService {
     async handleSignup(userData: customObject) {
@@ -9,6 +10,13 @@ export default class UserService {
             email: userData.email,
             password: userData.password
         });
+        await NotificationConfig.create(
+            {
+                userId: user._id,
+                categoryPreference: [],
+                keywords: []
+            }
+        );
         return user;
     }
 
