@@ -16,15 +16,14 @@ export default class ExternalNewsService {
 
     async startNewsScheduler() {
         await this.fetchNews();
-
         setInterval(async () => {
             await this.fetchNews();
         }, 10800000);
     }
 
     async fetchNews() {
-        // await this.fetchNewsFromApi(this.newsApiInstance);
-        // await this.fetchNewsFromApi(this.theNewsApiInstance);
+        await this.fetchNewsFromApi(this.newsApiInstance);
+        await this.fetchNewsFromApi(this.theNewsApiInstance);
     }
 
     async fetchNewsFromApi(newsSourceInstance: NewsApiService | TheNewsApiService) {
@@ -39,7 +38,7 @@ export default class ExternalNewsService {
         });
     }
 
-    protected async addDataToDb(articles: customObject[]) {
+    async addDataToDb(articles: customObject[]) {
         for (const article of articles) {
             try {
                 const news = await News.create(article);

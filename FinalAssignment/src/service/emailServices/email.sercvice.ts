@@ -40,7 +40,7 @@ export default class Nodemailer {
         }
     }
 
-    getMailOptions(headline: string, imageUrl: string, url: string, userEmail: string) {
+    private getMailOptions(headline: string, imageUrl: string, url: string, userEmail: string) {
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
             to: userEmail,
