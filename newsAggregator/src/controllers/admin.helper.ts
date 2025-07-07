@@ -18,12 +18,16 @@ export default class AdminHelper {
         return input;
     }
 
-    createStatusDropdown(options: string[], selected?: string): HTMLSelectElement {
+    createStatusDropdown(options: string[], type: string, selected?: string): HTMLSelectElement {
         const select = document.createElement("select");
         options.forEach(optVal => {
             const option = document.createElement("option");
             option.value = optVal;
-            option.text = optVal === "true" ? "Active" : optVal === "false" ? "Inactive" : optVal;
+            if (type === "reports") {
+                option.text = optVal === "true" ? "Blocked" : optVal === "false" ? "Unblocked" : optVal;
+            } else {
+                option.text = optVal === "true" ? "Active" : optVal === "false" ? "Inactive" : optVal;
+            }
             if (optVal === selected) option.selected = true;
             select.appendChild(option);
         });

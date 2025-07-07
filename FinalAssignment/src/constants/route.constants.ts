@@ -6,7 +6,8 @@ export class RouteConstants {
         grantadminaccess: "/grantadminaccess",
         revokeadminaccess: "/revokeadminaccess",
         reports: "/reports",
-        categories: "/categories"
+        categories: "/categories",
+        list: "/list"
     }
 
     static externalSource = {

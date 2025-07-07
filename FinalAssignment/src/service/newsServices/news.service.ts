@@ -13,7 +13,7 @@ export default class NewsService {
             .sort({ createdAt: -1 });
         const total = await News.countDocuments({ blocked: false });
         const totalPages = Math.ceil(total / 20);
-        return {news, totalPages};
+        return { news, totalPages };
     }
 
     async handleGetNewsBycategory(category: string, page: string) {
@@ -22,22 +22,27 @@ export default class NewsService {
         const news = await News.find({ category, blocked: false }).sort({ likes: -1 }).limit(20).skip(skip);
         const total = await News.countDocuments({ blocked: false });
         const totalPages = Math.ceil(total / 20);
-        return {news, totalPages};
+        return { news, totalPages };
     }
 
     async handleGetNewsBySearchQuery(searchQuery: string, page: string) {
         const pageNumber = parseInt(page) || 1;
         const skip = (pageNumber - 1) * 20;
         const news = await News.find({
-            $or: [
-                { title: { $regex: searchQuery, $options: 'i' } },
-                { content: { $regex: searchQuery, $options: 'i' } },
-                { description: { $regex: searchQuery, $options: 'i' } }
+            $and: [
+                { blocked: false },
+                {
+                    $or: [
+                        { title: { $regex: searchQuery, $options: 'i' } },
+                        { content: { $regex: searchQuery, $options: 'i' } },
+                        { description: { $regex: searchQuery, $options: 'i' } }
+                    ]
+                }
             ]
         }).sort({ likes: -1 }).limit(20).skip(skip);
         const total = await News.countDocuments({ blocked: false });
         const totalPages = Math.ceil(total / 20);
-        return {news, totalPages};
+        return { news, totalPages };
     }
 
     async handleGetNewsByDate(dateData: customObject) {

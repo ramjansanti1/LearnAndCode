@@ -5,6 +5,11 @@ import { MessageConstants } from "../constants/message.constants.js";
 import { customObject } from "../types/types.js";
 
 export default class AdminService {
+    async handleGetAdminList() {
+        const adminList = await User.find({ isAdmin: true });
+        return adminList;
+    }
+
     private async updateAccessInDb(userData: customObject, isAdmin: Boolean) {
         const userFromDatabase = await User.findOne({ email: userData.email });
         if (userFromDatabase) {
@@ -36,9 +41,7 @@ export default class AdminService {
         if (!fetchedArticle) {
             throw new Error(MessageConstants.article.notFound);
         }
-        if (fetchedArticle.blocked) {
-            fetchedArticle.blocked = articleData.status;
-        }
+        fetchedArticle.blocked = articleData.status;
         fetchedArticle.save({ validateBeforeSave: false });
         return fetchedArticle;
     }

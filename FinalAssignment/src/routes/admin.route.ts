@@ -25,6 +25,14 @@ export default class AdminRouter {
         this.router.use(RouteConstants.admin.externalSource, this.externalSourceRouter.router);
 
         this.router
+            .route(RouteConstants.root)
+            .get(
+                this.authMiddleware.verifyJWT,
+                this.adminMiddleware.checkAdmin,
+                this.adminController.getAdminList
+            );
+
+        this.router
             .route(RouteConstants.admin.grantadminaccess)
             .patch(
                 this.authMiddleware.verifyJWT,

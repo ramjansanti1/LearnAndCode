@@ -6,6 +6,7 @@ export default class AdminController {
 
     constructor() {
         this.adminService = new AdminService();
+        this.getAdminList = this.getAdminList.bind(this);
         this.grantAdminAccess = this.grantAdminAccess.bind(this);
         this.revokeAdminAccess = this.revokeAdminAccess.bind(this);
         this.getReports = this.getReports.bind(this);
@@ -13,6 +14,19 @@ export default class AdminController {
         this.getCategories = this.getCategories.bind(this);
         this.addCategories = this.addCategories.bind(this);
         this.updateCategories = this.updateCategories.bind(this);
+    }
+
+    async getAdminList(req: any, res: any) {
+        try {
+            const adminList = await this.adminService.handleGetAdminList();
+            return res
+                .status(200)
+                .json({ message: MessageConstants.access.success, data: adminList });
+        } catch (error: any) {
+            return res
+                .status(500)
+                .json({ message: error.message || MessageConstants.access.error, data: error });
+        }
     }
 
     async grantAdminAccess(req: any, res: any) {

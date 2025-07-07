@@ -297,3 +297,11 @@ select.status-dropdown:focus {
     border-radius: 4px;
     border: 1px solid #ccc;
 }
+
+.reportedArticleContainer {
+    margin-top: 2em;
+}
+
+.adminAccessContainer {
+    margin-top: 2em;
+}
