@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="../styles/admin.homepage.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">📰 NewsApp</div>
+            <ul class="nav-links">
+                <li><a onclick="showExternalSource()">External Servers</a></li>
+                <li><a onclick="showCategorySection()">Categories</a></li>
+                <li><a onclick="showReportedArticles()">Reports</a></li>
+                <li><a onclick="showAdminAccessSection()">Access</a></li>
+                <li><a onclick="logoutUser()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="externalServers" class="externalServers"></div>
+    <div id="categoryContainer" class="categoryContainer"></div>
+    <div id="reportedArticleContainer" class="reportedArticleContainer"></div>
+    <div id="adminAccessContainer" class="adminAccessContainer"></div>
+</body>
+<script type="module" src="../../src/controllers/admin.homepage.ts"></script>
+
+</html>

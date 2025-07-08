@@ -1,0 +1,307 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e3a8a;
+    padding: 1rem 2rem;
+    color: #fff;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar .nav-links a:hover {
+    text-decoration: underline;
+}
+
+.news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.news-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+}
+
+.news-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: 1rem;
+}
+
+.news-content h3 {
+    margin-bottom: 0.5rem;
+}
+
+.news-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.news-content a {
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-card {
+    position: relative;
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 1rem;
+}
+
+.news-content {
+    flex-grow: 1;
+}
+
+.card-actions {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.card-actions .btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #555;
+    transition: color 0.2s, transform 0.1s;
+}
+
+.card-actions .btn:hover {
+    color: #1e3a8a;
+    transform: scale(1.2);
+}
+
+.news-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+}
+
+.category-trigger {
+    cursor: pointer;
+}
+
+.category-list {
+    position: absolute;
+    top: 60px;
+    left: 95rem;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    list-style: none;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.category-list li {
+    padding: 0.3rem 0;
+}
+
+.category-list li a {
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.category-list li a:hover {
+    color: #1e3a8a;
+}
+
+.notification-card {
+    border: 1px solid #ddd;
+    border-left: 4px solid #1e3a8a;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    font-family: Arial, sans-serif;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.badge {
+    font-size: 0.85rem;
+    background-color: #1e3a8a;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.notification-body p {
+    margin: 1rem 0;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.notification-body a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.notification-body a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.config-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: sans-serif;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.externalServers {
+    margin-top: 2em;
+}
+
+button.update-btn {
+    padding: 6px 12px;
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-left: 5em;
+}
+
+button.update-btn:hover {
+    background-color: #1e3a8a;
+}
+
+button.update-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+select.status-dropdown {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    margin-left: 5em;
+}
+
+select.status-dropdown:focus {
+    border-color: #1e3a8a;
+    outline: none;
+}
+
+#categoryContainer {
+    display: none;
+    margin-top: 20px;
+}
+
+#categoryContainer form {
+    display: flex;
+    align-items: center;
+}
+
+#categoryContainer input {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.reportedArticleContainer {
+    margin-top: 2em;
+}
+
+.adminAccessContainer {
+    margin-top: 2em;
+}

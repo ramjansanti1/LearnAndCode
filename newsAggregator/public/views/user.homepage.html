@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News App</title>
+    <link rel="stylesheet" href="../styles/user.homepage.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">📰 NewsApp</div>
+            <ul class="nav-links">
+                <li><a onclick="getNewsBasedOnCategory('general')">Home</a></li>
+                <li onclick="toggleCategoryMenu()" style="cursor: pointer;">Categories</li>
+                <li><a onclick="getSavedNews()">Saved Articles</a></li>
+                <li><a onclick="getNotifications()">Notifications</a></li>
+                <li><a onclick="getNotificationConfig()">Notification Configure</a></li>
+                <li><a onclick="logoutUser()">Logout</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search articles..."
+                    onkeydown="if(event.key==='Enter') getNewsByQuery()" />
+                <button onclick="getNewsByQuery()"><i class="fa fa-search"></i></button>
+            </div>
+        </nav>
+
+        <ul id="categoryList" class="category-list" style="display: none;">
+            <li><a onclick="getNewsBasedOnCategory('sports')">Sports</a></li>
+            <li><a onclick="getNewsBasedOnCategory('business')">Business</a></li>
+            <li><a onclick="getNewsBasedOnCategory('entertainment')">Entertainment</a></li>
+            <li><a onclick="getNewsBasedOnCategory('health')">Health</a></li>
+            <li><a onclick="getNewsBasedOnCategory('science')">Science</a></li>
+            <li><a onclick="getNewsBasedOnCategory('technology')">Technology</a></li>
+            <li><a onclick="getNewsBasedOnCategory('fantasy')">Fantasy</a></li>
+        </ul>
+    </header>
+
+    <main class="news-container" id="newsContainer"></main>
+    <div class="notificationContainer" id="notificationContainer"></div>
+    <div class="configContainer" id="configContainer"></div>
+    <div class="pagination-container" id="paginationContainer"></div>
+</body>
+<script type="module" src="../../src/controllers/user.homepage.ts"></script>
+
+</html>
